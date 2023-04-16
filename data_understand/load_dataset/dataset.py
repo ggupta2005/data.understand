@@ -1,5 +1,6 @@
-import pandas as pd
 from typing import Tuple
+
+import pandas as pd
 
 
 def load_dataset_as_dataframe(file_name: str) -> pd.DataFrame:

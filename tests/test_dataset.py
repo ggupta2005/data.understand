@@ -1,6 +1,5 @@
-from data_understand.load_dataset import (
-    get_jupyter_nb_code_to_read_as_dataframe,
-)
+from data_understand.load_dataset import \
+    get_jupyter_nb_code_to_read_as_dataframe
 
 
 class TestLoadDataset:
