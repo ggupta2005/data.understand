@@ -47,7 +47,7 @@ def get_jupyter_nb_code_to_generate_histogram_distributions() -> (
 ):
     markdown = "### Generate histogram distribution for continous features"
     code = (
-        "from data_understand.value_distribution import "
+        "from data_understand.value_distributions import "
         + "generate_histogram_distributions\n"
         + "generate_histogram_distributions(df)"
     )
