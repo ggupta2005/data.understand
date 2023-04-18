@@ -8,5 +8,9 @@
 **-py3-none-any.whl
 **.tar.gz
 **.zip
+**.ipynb
 **.output.ipynb
 **.processed.ipynb
+
+# CSV
+***.csv
