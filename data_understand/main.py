@@ -1,8 +1,10 @@
 import argparse
 
 import nbformat
-from dataset_characteristics import (get_jupyter_nb_code_to_dataframe_head,
-                                     get_jupyter_nb_code_to_dataframe_types)
+from dataset_characteristics import (
+    get_jupyter_nb_code_to_dataframe_head,
+    get_jupyter_nb_code_to_dataframe_types,
+    get_jupyter_nb_code_to_find_columns_having_missing_values)
 from dataset_statistics import (get_jupyter_nb_code_to_dataframe_num_cols,
                                 get_jupyter_nb_code_to_dataframe_num_rows)
 from load_dataset import (get_jupyter_nb_code_to_read_as_dataframe,
@@ -83,7 +85,10 @@ if __name__ == "__main__":
             historgram_markdown,
             histogram_code,
         ) = get_jupyter_nb_code_to_generate_histogram_distributions()
-
+        (
+            missing_values_markdown,
+            missing_values_code,
+        ) = get_jupyter_nb_code_to_find_columns_having_missing_values()
         nb["cells"] = [
             v4.new_markdown_cell(source=dataframe_read_markdown),
             v4.new_code_cell(source=dataframe_read_code),
@@ -97,6 +102,8 @@ if __name__ == "__main__":
             ),
             v4.new_markdown_cell(source=dataframe_types_markdown),
             v4.new_code_cell(source=dataframe_types_code),
+            v4.new_markdown_cell(source=missing_values_markdown),
+            v4.new_code_cell(source=missing_values_code),
             v4.new_markdown_cell(source=dataframe_head_markdown),
             v4.new_code_cell(source=dataframe_head_code),
             v4.new_markdown_cell(source=historgram_markdown),
