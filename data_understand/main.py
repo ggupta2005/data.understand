@@ -8,6 +8,8 @@ from dataset_statistics import (get_jupyter_nb_code_to_dataframe_num_cols,
 from load_dataset import (get_jupyter_nb_code_to_read_as_dataframe,
                           load_dataset_as_dataframe)
 from nbformat import v4
+from value_distributions import \
+    get_jupyter_nb_code_to_generate_histogram_distributions
 
 
 def parse_args():
@@ -77,6 +79,10 @@ if __name__ == "__main__":
             dataframe_head_markdown,
             dataframe_head_code,
         ) = get_jupyter_nb_code_to_dataframe_head()
+        (
+            historgram_markdown,
+            histogram_code,
+        ) = get_jupyter_nb_code_to_generate_histogram_distributions()
 
         nb["cells"] = [
             v4.new_markdown_cell(source=dataframe_read_markdown),
@@ -93,6 +99,8 @@ if __name__ == "__main__":
             v4.new_code_cell(source=dataframe_types_code),
             v4.new_markdown_cell(source=dataframe_head_markdown),
             v4.new_code_cell(source=dataframe_head_code),
+            v4.new_markdown_cell(source=historgram_markdown),
+            v4.new_code_cell(source=histogram_code),
         ]
 
         with open(args.file_name + ".ipynb", "w") as f:
