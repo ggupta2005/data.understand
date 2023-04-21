@@ -7,6 +7,8 @@ from dataset_characteristics import (
     get_jupyter_nb_code_to_find_columns_having_missing_values)
 from dataset_statistics import (get_jupyter_nb_code_to_dataframe_num_cols,
                                 get_jupyter_nb_code_to_dataframe_num_rows)
+from feature_correlation import \
+    get_jupyter_nb_code_to_generate_correlation_matrices
 from load_dataset import (get_jupyter_nb_code_to_read_as_dataframe,
                           load_dataset_as_dataframe)
 from nbformat import v4
@@ -94,6 +96,10 @@ if __name__ == "__main__":
             frequency_markdown,
             frequency_code,
         ) = get_jupyter_nb_code_to_generate_cat_frequency_distributions()
+        (
+            feature_correlation_markdown,
+            feature_correlation_code,
+        ) = get_jupyter_nb_code_to_generate_correlation_matrices()
         nb["cells"] = [
             v4.new_markdown_cell(source=dataframe_read_markdown),
             v4.new_code_cell(source=dataframe_read_code),
@@ -115,6 +121,8 @@ if __name__ == "__main__":
             v4.new_code_cell(source=histogram_code),
             v4.new_markdown_cell(source=frequency_markdown),
             v4.new_code_cell(source=frequency_code),
+            v4.new_markdown_cell(source=feature_correlation_markdown),
+            v4.new_code_cell(source=feature_correlation_code),
         ]
 
         with open(args.file_name + ".ipynb", "w") as f:
