@@ -13,4 +13,7 @@
 **.processed.ipynb
 
 # CSV
-***.csv
+**.csv
+
+# PDF
+**.pdf

@@ -1,6 +1,9 @@
 import argparse
 
 import nbformat
+from fpdf import FPDF
+from nbformat import v4
+
 from dataset_characteristics import (
     get_jupyter_nb_code_to_dataframe_head,
     get_jupyter_nb_code_to_dataframe_types,
@@ -11,7 +14,6 @@ from feature_correlation import \
     get_jupyter_nb_code_to_generate_correlation_matrices
 from load_dataset import (get_jupyter_nb_code_to_read_as_dataframe,
                           load_dataset_as_dataframe)
-from nbformat import v4
 from value_distributions import (
     get_jupyter_nb_code_to_generate_cat_frequency_distributions,
     get_jupyter_nb_code_to_generate_histogram_distributions)
@@ -57,6 +59,52 @@ if __name__ == "__main__":
         dataframe = load_dataset_as_dataframe(args.file_name)
         print(dataframe.shape[0])
         print(dataframe.shape[1])
+
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font("Arial", size=20)
+        pdf.cell(
+            200, 10, "Understanding the data in " + args.file_name, align="C"
+        )
+        pdf.ln()
+        pdf.set_font("Arial", size=11)
+        pdf.cell(0, 10, "This PDF has different insights about your dataset.")
+        pdf.ln()
+
+        # Add an index to the document
+        pdf.set_font("Arial", size=15)
+        pdf.cell(0, 10, "Index")
+        pdf.ln()
+        pdf.set_font("Arial", size=12)
+        pdf.cell(
+            0, 10, "Chapter 1 - Dataset Charateristics", link=pdf.add_link()
+        )
+        # pdf.ln()
+        # pdf.cell(0, 10, "Chapter 2 - Methods", link=pdf.add_link())
+        # pdf.ln()
+        # pdf.cell(0, 10, "Chapter 3 - Results", link=pdf.add_link())
+
+        pdf.add_page()
+        pdf.set_font("Arial", size=20)
+        pdf.cell(200, 10, "Chapter 1 - Dataset Charateristics", align="C")
+        pdf.ln()
+        pdf.set_font("Arial", size=11)
+        pdf.cell(
+            0,
+            10,
+            "The number of rows in the dataset are: "
+            + str(dataframe.shape[0]),
+        )
+        pdf.ln()
+        pdf.cell(
+            0,
+            10,
+            "The number of columns in the dataset are: "
+            + str(dataframe.shape[1]),
+        )
+        pdf.ln()
+
+        pdf.output(args.file_name + ".pdf")
 
     if args.generate_jupyter_notebook:
         nb = v4.new_notebook()
