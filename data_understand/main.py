@@ -1,19 +1,21 @@
 import argparse
 
 import nbformat
-from dataset_characteristics import (
+from fpdf import FPDF
+from nbformat import v4
+
+from data_understand.dataset_characteristics import (
     get_jupyter_nb_code_to_dataframe_head,
     get_jupyter_nb_code_to_dataframe_types,
     get_jupyter_nb_code_to_find_columns_having_missing_values)
-from dataset_statistics import (get_jupyter_nb_code_to_dataframe_num_cols,
-                                get_jupyter_nb_code_to_dataframe_num_rows)
-from feature_correlation import \
+from data_understand.dataset_statistics import (
+    get_jupyter_nb_code_to_dataframe_num_cols,
+    get_jupyter_nb_code_to_dataframe_num_rows)
+from data_understand.feature_correlation import \
     get_jupyter_nb_code_to_generate_correlation_matrices
-from fpdf import FPDF
-from load_dataset import (get_jupyter_nb_code_to_read_as_dataframe,
-                          load_dataset_as_dataframe)
-from nbformat import v4
-from value_distributions import (
+from data_understand.load_dataset import (
+    get_jupyter_nb_code_to_read_as_dataframe, load_dataset_as_dataframe)
+from data_understand.value_distributions import (
     get_jupyter_nb_code_to_generate_cat_frequency_distributions,
     get_jupyter_nb_code_to_generate_histogram_distributions)
 
@@ -52,7 +54,7 @@ def parse_args():
     return args
 
 
-if __name__ == "__main__":
+def main():
     args = parse_args()
     if args.generate_pdf:
         dataframe = load_dataset_as_dataframe(args.file_name)
@@ -174,3 +176,7 @@ if __name__ == "__main__":
 
         with open(args.file_name + ".ipynb", "w") as f:
             nbformat.write(nb, f)
+
+
+if __name__ == "__main__":
+    main()

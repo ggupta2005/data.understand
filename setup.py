@@ -35,4 +35,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Development Status :: 3 - Alpha",
     ],
+    entry_points={
+        "console_scripts": ["data_understand = data_understand.main:main"]
+    },
 )
