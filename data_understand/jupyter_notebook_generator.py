@@ -21,6 +21,7 @@ from data_understand.value_distributions import (
 
 def generate_jupyter_notebook(args: Any) -> None:
     nb = v4.new_notebook()
+    nb.metadata["title"] = "Understanding the data in " + args.file_name
     (
         dataframe_read_markdown,
         dataframe_read_code,
