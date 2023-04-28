@@ -2,6 +2,8 @@ from typing import Any
 
 from fpdf import FPDF
 
+from data_understand.dataset_characteristics.characteristics import \
+    get_message_columns_having_missing_values
 from data_understand.feature_correlation import save_correlation_matrices
 from data_understand.load_dataset import load_dataset_as_dataframe
 
@@ -62,6 +64,12 @@ class PDFReportGenerator(FPDF):
             0,
             10,
             "The name of the target column is: " + self._target_column_name,
+        )
+        self.ln()
+        self.cell(
+            0,
+            10,
+            get_message_columns_having_missing_values(self._dataframe),
         )
         self.ln()
 
