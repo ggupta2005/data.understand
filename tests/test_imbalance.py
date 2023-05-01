@@ -23,13 +23,13 @@ class TestClassImbalance:
         output_str = get_message_target_column_imbalance(df, "target")
         assert "The majority class is: 0" in output_str
         assert (
-            "The ratio of number of instance of majority class 0 to " +
-            "class 1 is: 1.0"
+            "The ratio of number of instance of majority class 0 to "
+            + "class 1 is: 1.0"
             in output_str
         )
         assert (
-            "The ratio of number of instance of majority class 0 to " +
-            "class 2 is: 1.0"
+            "The ratio of number of instance of majority class 0 to "
+            + "class 2 is: 1.0"
             in output_str
         )
 
@@ -46,8 +46,7 @@ class TestClassImbalance:
 
         assert (
             "The target column values look to be continous in nature. "
-            "So cannot report class imbalance."
-            in output_str
+            "So cannot report class imbalance." in output_str
         )
 
     def test_find_target_column_imbalance_classification(self):
@@ -66,13 +65,13 @@ class TestClassImbalance:
         output_str = sys.stdout.getvalue()
         assert "The majority class is: 0" in output_str
         assert (
-            "The ratio of number of instance of majority class 0 to " +
-            "class 1 is: 1.0"
+            "The ratio of number of instance of majority class 0 to "
+            + "class 1 is: 1.0"
             in output_str
         )
         assert (
-            "The ratio of number of instance of majority class 0 to " +
-            "class 2 is: 1.0"
+            "The ratio of number of instance of majority class 0 to "
+            + "class 2 is: 1.0"
             in output_str
         )
 
@@ -90,6 +89,5 @@ class TestClassImbalance:
         output_str = sys.stdout.getvalue()
         assert (
             "The target column values look to be continous in nature. "
-            "So cannot report class imbalance."
-            in output_str
+            "So cannot report class imbalance." in output_str
         )
