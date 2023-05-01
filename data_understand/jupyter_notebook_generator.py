@@ -14,6 +14,8 @@ from data_understand.feature_correlation import \
     get_jupyter_nb_code_to_generate_correlation_matrices
 from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
+from data_understand.target_characteristics import \
+    get_jupyter_nb_code_to_get_target
 from data_understand.value_distributions import (
     get_jupyter_nb_code_to_generate_cat_frequency_distributions,
     get_jupyter_nb_code_to_generate_histogram_distributions)
@@ -26,7 +28,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         dataframe_read_markdown,
         dataframe_read_code,
     ) = get_jupyter_nb_code_to_read_as_dataframe(args.file_name)
-
+    (
+        target_read_markdown,
+        target_read_code,
+    ) = get_jupyter_nb_code_to_get_target(args.target_column)
     (
         dataframe_rows_markdown,
         dataframe_rows_code,
@@ -63,8 +68,11 @@ def generate_jupyter_notebook(args: Any) -> None:
         feature_correlation_code,
     ) = get_jupyter_nb_code_to_generate_correlation_matrices()
     nb["cells"] = [
+        v4.new_markdown_cell(source="## Read dataset and set target column"),
         v4.new_markdown_cell(source=dataframe_read_markdown),
         v4.new_code_cell(source=dataframe_read_code),
+        v4.new_markdown_cell(source=target_read_markdown),
+        v4.new_code_cell(source=target_read_code),
         v4.new_markdown_cell(source="## Display dataset statistics"),
         v4.new_markdown_cell(source=dataframe_rows_markdown),
         v4.new_code_cell(source=dataframe_rows_code),
