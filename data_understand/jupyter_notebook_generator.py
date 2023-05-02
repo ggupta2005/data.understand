@@ -3,6 +3,8 @@ from typing import Any
 import nbformat
 from nbformat import v4
 
+from data_understand.class_imbalance import \
+    get_jupyter_nb_code_to_find_target_column_imbalance
 from data_understand.dataset_characteristics import (
     get_jupyter_nb_code_to_dataframe_head,
     get_jupyter_nb_code_to_dataframe_types,
@@ -67,6 +69,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         feature_correlation_markdown,
         feature_correlation_code,
     ) = get_jupyter_nb_code_to_generate_correlation_matrices()
+    (
+        class_imbalance_markdown,
+        class_imbalance_code,
+    ) = get_jupyter_nb_code_to_find_target_column_imbalance()
     nb["cells"] = [
         v4.new_markdown_cell(source="## Read dataset and set target column"),
         v4.new_markdown_cell(source=dataframe_read_markdown),
@@ -94,6 +100,12 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=frequency_code),
         v4.new_markdown_cell(source=feature_correlation_markdown),
         v4.new_code_cell(source=feature_correlation_code),
+        v4.new_markdown_cell(
+            source="## Find target column imbalances in "
+                   "classification scenarios"
+        ),
+        v4.new_markdown_cell(source=class_imbalance_markdown),
+        v4.new_code_cell(source=class_imbalance_code),
     ]
 
     with open(args.file_name + ".ipynb", "w") as f:
