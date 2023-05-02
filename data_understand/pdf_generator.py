@@ -2,6 +2,7 @@ from typing import Any
 
 from fpdf import FPDF
 
+from data_understand.class_imbalance import get_message_target_column_imbalance
 from data_understand.dataset_characteristics.characteristics import \
     get_message_columns_having_missing_values
 from data_understand.feature_correlation import save_correlation_matrices
@@ -100,6 +101,22 @@ class PDFReportGenerator(FPDF):
             title="Correlation plots for numeric features",
         )
 
+    def add_class_imbalance_page(self):
+        # Add a new page
+        self.add_page()
+        self.set_font("Arial", size=20)
+        self.cell(200, 10, "Chapter 3 - Class Imbalance", align="C")
+        self.ln()
+        self.set_font("Arial", size=11)
+        self.multi_cell(
+            0,
+            10,
+            get_message_target_column_imbalance(
+                self._dataframe, self._target_column_name
+            ),
+        )
+        self.ln()
+
     def save_pdf(self):
         self.output(self._file_name + ".pdf")
 
@@ -115,4 +132,5 @@ def generate_pdf(args: Any) -> None:
     pdf_report_generator.add_title_and_description()
     pdf_report_generator.add_data_characteristics_page()
     pdf_report_generator.add_feature_correlation_page()
+    pdf_report_generator.add_class_imbalance_page()
     pdf_report_generator.save_pdf()

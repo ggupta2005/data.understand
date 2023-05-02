@@ -11,7 +11,7 @@ def get_message_target_column_imbalance(
     unique_array, element_counts = np.unique(
         target_column_array, return_counts=True
     )
-    if len(unique_array) > 0.3 * len(target_column_array):
+    if len(unique_array) > 0.1 * len(target_column_array):
         return (
             "The target column values look to be continous in nature. "
             + "So cannot report class imbalance."
@@ -21,11 +21,20 @@ def get_message_target_column_imbalance(
         np.argwhere(element_counts == max_class_count)[0][0]
     ]
 
-    output_str = "The majority class is: {0}\n".format(max_class)
+    output_str = "The summary of number of instances of each class is below\n"
+    for element, count in zip(unique_array, element_counts):
+        output_str += (
+            "- The number of instances of class {0} are: {1}\n".format(
+                element, count
+            )
+        )
+
+    output_str += "\n"
+    output_str += "The majority class is: {0}\n".format(max_class)
     for element, count in zip(unique_array, element_counts):
         if max_class != element:
             output_str += (
-                "The ratio of number of instance of majority "
+                "- The ratio of number of instances of majority "
                 + "class {0} to class {1} is: {2}\n".format(
                     max_class, element, max_class_count / count
                 )
