@@ -102,7 +102,7 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=feature_correlation_code),
         v4.new_markdown_cell(
             source="## Find target column imbalances in "
-                   "classification scenarios"
+            "classification scenarios"
         ),
         v4.new_markdown_cell(source=class_imbalance_markdown),
         v4.new_code_cell(source=class_imbalance_code),
