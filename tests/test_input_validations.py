@@ -31,7 +31,7 @@ class TestInputValidations:
         with pytest.raises(
             Exception,
             match="A valid file name None is required. "
-                  "Please provide a valid file path.",
+            "Please provide a valid file path.",
         ):
             validate_input_parameters(args)
 
@@ -54,7 +54,7 @@ class TestInputValidations:
         with pytest.raises(
             Exception,
             match="The file test_file.txt is not a CSV file. "
-                  "Please provide a CSV file.",
+            "Please provide a CSV file.",
         ):
             validate_input_parameters(args)
 
@@ -66,7 +66,7 @@ class TestInputValidations:
         with pytest.raises(
             Exception,
             match=f"Unable to read CSV file {args.file_name} as "
-                  "a pandas DataFrame",
+            "a pandas DataFrame",
         ):
             validate_input_parameters(args)
 
