@@ -1,5 +1,6 @@
 import argparse
 
+from data_understand.input_validations import validate_input_parameters
 from data_understand.jupyter_notebook_generator import \
     generate_jupyter_notebook
 from data_understand.pdf_generator import generate_pdf
@@ -31,8 +32,8 @@ def parse_args():
     args = parser.parse_args()
 
     # Access Parsed Values
-    print("file_name: " + args.file_name)
-    print("target_column: " + args.target_column)
+    print("file_name: " + str(args.file_name))
+    print("target_column: " + str(args.target_column))
     print("generate_pdf: " + str(args.generate_pdf))
     print("generate_jupyter_notebook: " + str(args.generate_jupyter_notebook))
 
@@ -41,6 +42,7 @@ def parse_args():
 
 def main():
     args = parse_args()
+    validate_input_parameters(args)
     if args.generate_pdf:
         generate_pdf(args)
 
