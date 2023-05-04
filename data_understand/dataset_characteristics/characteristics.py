@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Any, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -24,6 +24,18 @@ def get_message_columns_having_missing_values(df: pd.DataFrame) -> str:
 
 def find_columns_having_missing_values(df: pd.DataFrame) -> None:
     print(get_message_columns_having_missing_values(df))
+
+
+def get_column_types_as_tuple(df: pd.DataFrame) -> Tuple[Tuple[Any]]:
+    columns = []
+    types = []
+    tuple_pairs = [("Column", "Type")]
+    for key in df.dtypes.to_dict():
+        columns.append(key)
+        types.append(str(df.dtypes.to_dict()[key]))
+        tuple_pairs.append((key, str(df.dtypes.to_dict()[key])))
+
+    return tuple(tuple_pairs)
 
 
 def get_jupyter_nb_code_to_dataframe_types() -> Tuple[str, str]:
