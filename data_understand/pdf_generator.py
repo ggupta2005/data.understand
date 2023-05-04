@@ -3,8 +3,8 @@ from typing import Any
 from fpdf import FPDF
 
 from data_understand.class_imbalance import get_message_target_column_imbalance
-from data_understand.dataset_characteristics.characteristics import \
-    get_message_columns_having_missing_values
+from data_understand.dataset_characteristics.characteristics import (
+    get_column_types_as_tuple, get_message_columns_having_missing_values)
 from data_understand.feature_correlation import save_correlation_matrices
 from data_understand.load_dataset import load_dataset_as_dataframe
 
@@ -47,6 +47,7 @@ class PDFReportGenerator(FPDF):
         self.cell(200, 10, "Chapter 1 - Dataset Charateristics", align="C")
         self.ln()
         self.set_font("Arial", size=11)
+
         self.cell(
             0,
             10,
@@ -54,6 +55,7 @@ class PDFReportGenerator(FPDF):
             + str(self._dataframe.shape[0]),
         )
         self.ln()
+
         self.cell(
             0,
             10,
@@ -61,18 +63,33 @@ class PDFReportGenerator(FPDF):
             + str(self._dataframe.shape[1]),
         )
         self.ln()
+
         self.cell(
             0,
             10,
             "The name of the target column is: " + self._target_column_name,
         )
         self.ln()
+
         self.cell(
             0,
             10,
             get_message_columns_having_missing_values(self._dataframe),
         )
         self.ln()
+
+        self.cell(
+            0,
+            10,
+            "The table of data type for each column is below:-"
+        )
+        self.ln()
+        dataset_snapshot_table = get_column_types_as_tuple(self._dataframe)
+        with self.table(text_align="CENTER") as table:
+            for data_row in dataset_snapshot_table:
+                row = table.row()
+                for datum in data_row:
+                    row.cell(datum)
 
     def add_feature_correlation_page(self):
         save_correlation_matrices(self._dataframe)
