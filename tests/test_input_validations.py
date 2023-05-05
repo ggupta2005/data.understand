@@ -7,7 +7,7 @@ import pytest
 from data_understand.input_validations import validate_input_parameters
 
 
-@pytest.fixture
+@pytest.fixture()
 def args():
     return Namespace(file_name="test_file.csv", target_column="target")
 
