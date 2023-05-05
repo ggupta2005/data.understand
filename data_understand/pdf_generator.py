@@ -115,13 +115,13 @@ class PDFReportGenerator(FPDF):
         image_file = "correlation.png"
 
         # Position the image on the page
-        x = 10
-        y = 10
+        y = 40
 
         # Add the image to the page
         self.image(
             image_file,
             Align.C,
+            y,
             width,
             height,
             title="Correlation plots for numeric features",
