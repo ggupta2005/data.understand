@@ -1,6 +1,6 @@
 from typing import Any
 
-from fpdf import FPDF
+from fpdf import FPDF, Align
 
 from data_understand.class_imbalance import get_message_target_column_imbalance
 from data_understand.dataset_characteristics.characteristics import (
@@ -92,10 +92,19 @@ class PDFReportGenerator(FPDF):
                     row.cell(datum)
 
     def add_feature_correlation_page(self):
-        save_correlation_matrices(self._dataframe)
-
         # Add a new page
         self.add_page()
+        self.set_font("Arial", size=20)
+        self.cell(
+            200, 10, "Chapter 2 - Visualize distributions of the dataset",
+            align=Align.C)
+        self.ln()
+
+        self.set_font("Arial", size=11)
+        self.cell(
+            200, 10, "Feature correlation for numerical features")
+
+        save_correlation_matrices(self._dataframe)
 
         # Set the image dimensions
         width = 100
@@ -105,13 +114,12 @@ class PDFReportGenerator(FPDF):
         image_file = "correlation.png"
 
         # Position the image on the page
-        x = 10
-        y = 10
+        y = 40
 
         # Add the image to the page
         self.image(
             image_file,
-            x,
+            Align.C,
             y,
             width,
             height,
