@@ -1,7 +1,6 @@
 from typing import Any
 
-from fpdf import FPDF
-from fpdf import Align
+from fpdf import FPDF, Align
 
 from data_understand.class_imbalance import get_message_target_column_imbalance
 from data_understand.dataset_characteristics.characteristics import (
