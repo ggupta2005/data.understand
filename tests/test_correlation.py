@@ -2,12 +2,12 @@ import numpy as np
 import pandas as pd
 
 from data_understand.feature_correlation import (
+    get_feature_correlations_as_tuple,
     get_jupyter_nb_code_to_generate_correlation_matrices,
     get_jupyter_nb_code_to_get_negatively_correlated_feature_pairs,
     get_jupyter_nb_code_to_get_postively_correlated_feature_pairs,
     get_top_k_negatively_correlated_feature_pairs,
-    get_top_k_postively_correlated_feature_pairs,
-    get_feature_correlations_as_tuple)
+    get_top_k_postively_correlated_feature_pairs)
 from data_understand.feature_correlation.correlation import _get_number_figures
 
 
