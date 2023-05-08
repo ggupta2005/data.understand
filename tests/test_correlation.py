@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from data_understand.feature_correlation import (
+    get_feature_correlations_as_tuple,
     get_jupyter_nb_code_to_generate_correlation_matrices,
     get_jupyter_nb_code_to_get_negatively_correlated_feature_pairs,
     get_jupyter_nb_code_to_get_postively_correlated_feature_pairs,
@@ -115,3 +116,33 @@ class TestFeatureCorrelation:
         assert isinstance(markdown, str)
         assert isinstance(code, str)
         assert "positive" in markdown
+
+    def test_get_feature_correlations_as_tuple(self):
+        np.random.seed(777)
+
+        # Generate positively correlated features
+        pos_corr_feat1 = np.random.normal(loc=10, scale=1, size=1000)
+        pos_corr_feat2 = pos_corr_feat1 + np.random.normal(
+            loc=0, scale=0.5, size=1000
+        )
+        pos_corr_df = pd.DataFrame(
+            {"col1": pos_corr_feat1, "col2": pos_corr_feat2}
+        )
+
+        # Generate negatively correlated features
+        neg_corr_feat1 = np.random.normal(loc=10, scale=1, size=1000)
+        neg_corr_feat2 = neg_corr_feat1 - np.random.normal(
+            loc=0, scale=0.5, size=1000
+        )
+        neg_corr_df = pd.DataFrame(
+            {"col3": neg_corr_feat1, "col4": neg_corr_feat2}
+        )
+
+        # Concatenate the two dataframes
+        df = pd.concat([pos_corr_df, neg_corr_df], axis=1)
+
+        correlations = get_feature_correlations_as_tuple(df, 5, True)
+        assert len(correlations) >= 1
+        assert correlations[0][0] == "feature1"
+        assert correlations[0][1] == "feature2"
+        assert correlations[0][2] == "correlation"

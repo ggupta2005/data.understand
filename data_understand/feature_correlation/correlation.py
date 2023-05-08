@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -94,3 +94,19 @@ def get_jupyter_nb_code_to_get_negatively_correlated_feature_pairs() -> (
         + "get_top_k_negatively_correlated_feature_pairs(df, 5)"
     )
     return markdown, code
+
+
+def get_feature_correlations_as_tuple(
+    df: pd.DataFrame, k: int, positive_correlation: bool
+) -> Tuple[Tuple[Any]]:
+    if positive_correlation:
+        correlation_df = get_top_k_postively_correlated_feature_pairs(df, k)
+    else:
+        correlation_df = get_top_k_negatively_correlated_feature_pairs(df, k)
+
+    correlation_df["correlation"] = correlation_df["correlation"].astype(str)
+    header_list = list(correlation_df.columns)
+
+    return tuple(
+        [tuple(header_list)] + list(correlation_df.to_records(index=False))
+    )
