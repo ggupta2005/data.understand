@@ -11,5 +11,5 @@ __all__ = [
     "find_columns_having_missing_values",
     "get_jupyter_nb_code_to_find_columns_having_missing_values",
     "get_message_columns_having_missing_values",
-    "get_column_types_as_tuple"
+    "get_column_types_as_tuple",
 ]

@@ -78,11 +78,7 @@ class PDFReportGenerator(FPDF):
         )
         self.ln()
 
-        self.cell(
-            0,
-            10,
-            "The table of data type for each column is below:-"
-        )
+        self.cell(0, 10, "The table of data type for each column is below:-")
         self.ln()
         dataset_snapshot_table = get_column_types_as_tuple(self._dataframe)
         with self.table(text_align="CENTER") as table:
@@ -96,13 +92,15 @@ class PDFReportGenerator(FPDF):
         self.add_page()
         self.set_font("Arial", size=20)
         self.cell(
-            200, 10, "Chapter 2 - Visualize distributions of the dataset",
-            align=Align.C)
+            200,
+            10,
+            "Chapter 2 - Visualize distributions of the dataset",
+            align=Align.C,
+        )
         self.ln()
 
         self.set_font("Arial", size=11)
-        self.cell(
-            200, 10, "Feature correlation for numerical features")
+        self.cell(200, 10, "Feature correlation for numerical features")
 
         save_correlation_matrices(self._dataframe)
 

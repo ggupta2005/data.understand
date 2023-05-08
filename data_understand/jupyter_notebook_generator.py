@@ -12,8 +12,10 @@ from data_understand.dataset_characteristics import (
 from data_understand.dataset_statistics import (
     get_jupyter_nb_code_to_dataframe_num_cols,
     get_jupyter_nb_code_to_dataframe_num_rows)
-from data_understand.feature_correlation import \
-    get_jupyter_nb_code_to_generate_correlation_matrices
+from data_understand.feature_correlation import (
+    get_jupyter_nb_code_to_generate_correlation_matrices,
+    get_jupyter_nb_code_to_get_negatively_correlated_feature_pairs,
+    get_jupyter_nb_code_to_get_postively_correlated_feature_pairs)
 from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
 from data_understand.target_characteristics import \
@@ -66,6 +68,18 @@ def generate_jupyter_notebook(args: Any) -> None:
         frequency_code,
     ) = get_jupyter_nb_code_to_generate_cat_frequency_distributions()
     (
+        positive_correlation_markdown,
+        positive_correlation_code,
+    ) = get_jupyter_nb_code_to_get_postively_correlated_feature_pairs()
+    (
+        negative_correlation_markdown,
+        negative_correlation_code,
+    ) = get_jupyter_nb_code_to_get_negatively_correlated_feature_pairs()
+    (
+        feature_correlation_markdown,
+        feature_correlation_code,
+    ) = get_jupyter_nb_code_to_generate_correlation_matrices()
+    (
         feature_correlation_markdown,
         feature_correlation_code,
     ) = get_jupyter_nb_code_to_generate_correlation_matrices()
@@ -98,6 +112,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=histogram_code),
         v4.new_markdown_cell(source=frequency_markdown),
         v4.new_code_cell(source=frequency_code),
+        v4.new_markdown_cell(source=positive_correlation_markdown),
+        v4.new_code_cell(source=positive_correlation_code),
+        v4.new_markdown_cell(source=negative_correlation_markdown),
+        v4.new_code_cell(source=negative_correlation_code),
         v4.new_markdown_cell(source=feature_correlation_markdown),
         v4.new_code_cell(source=feature_correlation_code),
         v4.new_markdown_cell(
