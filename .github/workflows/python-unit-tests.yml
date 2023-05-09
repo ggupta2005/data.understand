@@ -7,7 +7,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        packageDirectory: ["data_understand"]
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: [3.7, 3.8, 3.9, "3.10"]
     steps:
@@ -26,7 +25,6 @@ jobs:
       - name: Install data_understand
         run: |
           pip install -e .
-        working-directory: ${{ matrix.packageDirectory }}
 
       - name: Install test requirements
         run: |
@@ -39,4 +37,3 @@ jobs:
       - name: Run tests
         run: |
           pytest
-        working-directory: ${{ matrix.packageDirectory }}
