@@ -24,8 +24,7 @@ jobs:
 
       - name: Install data_understand
         run: |
-          python setup.py sdist
-          pip install dist/data_understand-0.0.0.tar.gz
+          pip install -e .
 
       - name: Install test requirements
         run: |
