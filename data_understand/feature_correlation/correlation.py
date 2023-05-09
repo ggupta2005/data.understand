@@ -38,7 +38,7 @@ def get_jupyter_nb_code_to_generate_correlation_matrices() -> Tuple[str, str]:
 def _get_top_k_correlated_feature_pairs(
     df: pd.DataFrame, positive_correlation: bool
 ) -> pd.DataFrame:
-    corr_matrix = df.corr(numeric_only=True)
+    corr_matrix = df.corr()
 
     corr_pairs = corr_matrix.unstack().reset_index()
     corr_pairs = corr_pairs[corr_pairs["level_0"] < corr_pairs["level_1"]]
