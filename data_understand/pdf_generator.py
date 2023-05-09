@@ -1,11 +1,12 @@
 from typing import Any
 
-from fpdf import FPDF
+from fpdf import FPDF, Align
 
 from data_understand.class_imbalance import get_message_target_column_imbalance
-from data_understand.dataset_characteristics.characteristics import \
-    get_message_columns_having_missing_values
-from data_understand.feature_correlation import save_correlation_matrices
+from data_understand.dataset_characteristics.characteristics import (
+    get_column_types_as_tuple, get_message_columns_having_missing_values)
+from data_understand.feature_correlation import (
+    get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
 
 
@@ -47,6 +48,7 @@ class PDFReportGenerator(FPDF):
         self.cell(200, 10, "Chapter 1 - Dataset Charateristics", align="C")
         self.ln()
         self.set_font("Arial", size=11)
+
         self.cell(
             0,
             10,
@@ -54,6 +56,7 @@ class PDFReportGenerator(FPDF):
             + str(self._dataframe.shape[0]),
         )
         self.ln()
+
         self.cell(
             0,
             10,
@@ -61,12 +64,14 @@ class PDFReportGenerator(FPDF):
             + str(self._dataframe.shape[1]),
         )
         self.ln()
+
         self.cell(
             0,
             10,
             "The name of the target column is: " + self._target_column_name,
         )
         self.ln()
+
         self.cell(
             0,
             10,
@@ -74,30 +79,81 @@ class PDFReportGenerator(FPDF):
         )
         self.ln()
 
-    def add_feature_correlation_page(self):
-        save_correlation_matrices(self._dataframe)
+        self.cell(0, 10, "The table of data type for each column is below:-")
+        self.ln()
+        dataset_snapshot_table = get_column_types_as_tuple(self._dataframe)
+        with self.table(text_align="CENTER") as table:
+            for data_row in dataset_snapshot_table:
+                row = table.row()
+                for datum in data_row:
+                    row.cell(datum)
 
+    def add_feature_correlation_page(self):
         # Add a new page
         self.add_page()
+        self.set_font("Arial", size=20)
+        self.cell(
+            200,
+            10,
+            "Chapter 2 - Visualize distributions of the dataset",
+            align=Align.C,
+        )
+        self.ln()
 
-        # Set the image dimensions
-        width = 100
-        height = 100
+        self.set_font("Arial", size=11)
+        self.multi_cell(
+            0,
+            10,
+            "This section have graphs and tables using which you can "
+            "visualize distibutions of different features in your dataset, "
+            "visualize the distibution of various categories for "
+            "categorical features and find correlations between "
+            "different features.",
+        )
+        self.ln()
 
-        # Load the image file
-        image_file = "correlation.png"
+        self.set_font("Arial", size=15)
+        self.cell(None, None, "Feature Correlations")
+        self.ln()
 
-        # Position the image on the page
-        x = 10
-        y = 10
+        self.set_font("Arial", size=11)
+        self.cell(0, 10, "Top five positive feature correlations")
+        self.ln()
+        positive_feature_correlation_table = get_feature_correlations_as_tuple(
+            self._dataframe, 5, True
+        )
+        with self.table(text_align="CENTER") as table:
+            for data_row in positive_feature_correlation_table:
+                row = table.row()
+                for datum in data_row:
+                    row.cell(datum)
+        self.ln()
+
+        self.set_font("Arial", size=11)
+        self.cell(0, 10, "Top five negative feature correlations")
+        self.ln()
+        negative_feature_correlation_table = get_feature_correlations_as_tuple(
+            self._dataframe, 5, False
+        )
+        with self.table(text_align="CENTER") as table:
+            for data_row in negative_feature_correlation_table:
+                row = table.row()
+                for datum in data_row:
+                    row.cell(datum)
+        self.ln()
+
+        self.add_page()
+        self.set_font("Arial", size=11)
+        self.cell(200, 10, "Feature correlation graph for numerical features")
+        save_correlation_matrices(self._dataframe)
 
         # Add the image to the page
         self.image(
-            image_file,
-            x,
-            y,
-            width,
-            height,
+            "correlation.png",
+            Align.C,
+            y=10,
+            w=100,
+            h=100,
             title="Correlation plots for numeric features",
         )
 

@@ -4,7 +4,8 @@ from io import StringIO
 import pandas as pd
 
 from data_understand.dataset_characteristics import (
-    find_columns_having_missing_values, get_jupyter_nb_code_to_dataframe_head,
+    find_columns_having_missing_values, get_column_types_as_tuple,
+    get_jupyter_nb_code_to_dataframe_head,
     get_jupyter_nb_code_to_dataframe_types,
     get_message_columns_having_missing_values)
 
@@ -50,3 +51,12 @@ class TestDatasetCharacteristics:
             df_no_missing_values
         )
         assert "No columns were found to have missing values" in output
+
+    def test_get_column_types_as_tuple(self):
+        df = pd.DataFrame(
+            {"A": [1, 2, 3], "B": [4, 5, 5], "C": ["a", "b", "c"]}
+        )
+        tuple_of_column_types = get_column_types_as_tuple(df)
+        assert len(tuple_of_column_types) == 1 + len(df.columns)
+        assert tuple_of_column_types[0][0] == "Column"
+        assert tuple_of_column_types[0][1] == "Type"
