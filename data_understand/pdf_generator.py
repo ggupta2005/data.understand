@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Tuple
 
 from fpdf import FPDF, Align
 
@@ -33,6 +33,15 @@ class PDFReportGenerator(FPDF):
             self.multi_cell(0, 10, message)
         else:
             self.cell(0, 10, message)
+        self.ln()
+
+    def _add_table(self, message: str, dataset_as_tuples: Tuple[Tuple[Any]]):
+        self._add_text(message)
+        with self.table(text_align="CENTER") as table:
+            for data_row in dataset_as_tuples:
+                row = table.row()
+                for datum in data_row:
+                    row.cell(datum)
         self.ln()
 
     def add_title_and_description_page(self):
@@ -75,13 +84,11 @@ class PDFReportGenerator(FPDF):
             get_message_columns_having_missing_values(self._dataframe),
         )
 
-        self._add_text("The table of data type for each column is below:-")
         dataset_snapshot_table = get_column_types_as_tuple(self._dataframe)
-        with self.table(text_align="CENTER") as table:
-            for data_row in dataset_snapshot_table:
-                row = table.row()
-                for datum in data_row:
-                    row.cell(datum)
+        self._add_table(
+            "The table of data type for each column is below:-",
+            dataset_snapshot_table,
+        )
 
     def add_feature_correlation_page(self):
         # Add a new page
@@ -97,27 +104,21 @@ class PDFReportGenerator(FPDF):
         )
         self._add_sub_heading("Feature Correlations")
 
-        self._add_text("Top five positive feature correlations")
         positive_feature_correlation_table = get_feature_correlations_as_tuple(
             self._dataframe, 5, True
         )
-        with self.table(text_align="CENTER") as table:
-            for data_row in positive_feature_correlation_table:
-                row = table.row()
-                for datum in data_row:
-                    row.cell(datum)
-        self.ln()
+        self._add_table(
+            "Top five positive feature correlations",
+            positive_feature_correlation_table,
+        )
 
-        self._add_text("Top five negative feature correlations")
         negative_feature_correlation_table = get_feature_correlations_as_tuple(
             self._dataframe, 5, False
         )
-        with self.table(text_align="CENTER") as table:
-            for data_row in negative_feature_correlation_table:
-                row = table.row()
-                for datum in data_row:
-                    row.cell(datum)
-        self.ln()
+        self._add_table(
+            "Top five negative feature correlations",
+            negative_feature_correlation_table,
+        )
 
         self.add_page()
         self._add_text("Feature correlation graph for numerical features")
