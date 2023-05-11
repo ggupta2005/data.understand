@@ -1,3 +1,4 @@
+import os
 from typing import Any, Tuple
 
 from fpdf import FPDF, Align
@@ -8,6 +9,8 @@ from data_understand.dataset_characteristics.characteristics import (
 from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
+from data_understand.value_distributions import \
+    save_cat_frequency_distributions
 
 
 class PDFReportGenerator(FPDF):
@@ -90,8 +93,7 @@ class PDFReportGenerator(FPDF):
             dataset_snapshot_table,
         )
 
-    def add_feature_correlation_page(self):
-        # Add a new page
+    def add_data_visualization_pages(self):
         self.add_page()
         self._add_heading("Chapter 2 - Visualize distributions of the dataset")
         self._add_text(
@@ -102,6 +104,11 @@ class PDFReportGenerator(FPDF):
             "different features.",
             multi_line=True,
         )
+        self._add_cat_frequency_page()
+        self._add_feature_correlation_page()
+
+    def _add_feature_correlation_page(self):
+        self.add_page()
         self._add_sub_heading("Feature Correlations")
 
         positive_feature_correlation_table = get_feature_correlations_as_tuple(
@@ -127,11 +134,50 @@ class PDFReportGenerator(FPDF):
         self.image(
             "correlation.png",
             Align.C,
-            y=10,
-            w=100,
-            h=100,
+            y=30,
+            w=200,
+            h=200,
             title="Correlation plots for numeric features",
         )
+        os.remove("correlation.png")
+
+    def _add_cat_frequency_page(self):
+        self.add_page()
+        self._add_sub_heading("Categorical feature distribution")
+        save_cat_frequency_distributions(self._dataframe)
+
+        index = 0
+        page_index = 0
+        while os.path.exists("cat_frequency_{0}.png".format(index)):
+            if index > 0 and index % 4 == 0:
+                self.add_page()
+                page_index = 0
+
+            if page_index % 2 == 0:
+                self.image(
+                    "cat_frequency_{0}.png".format(index),
+                    Align.L,
+                    y=40 + (page_index // 2) * 90,
+                    w=90,
+                    h=90,
+                    title="Categorical value distribution",
+                )
+            else:
+                self.image(
+                    "cat_frequency_{0}.png".format(index),
+                    Align.R,
+                    y=40 + (page_index // 2) * 90,
+                    w=90,
+                    h=90,
+                    title="Categorical value distribution",
+                )
+            os.remove("cat_frequency_{0}.png".format(index))
+
+            page_index += 1
+            index += 1
+
+        if index == 0:
+            self._add_text("No categorical features exists in the dataset.")
 
     def add_class_imbalance_page(self):
         # Add a new page
@@ -159,6 +205,6 @@ def generate_pdf(args: Any) -> None:
     pdf_report_generator.add_title_and_description_page()
     pdf_report_generator.add_index_page()
     pdf_report_generator.add_data_characteristics_page()
-    pdf_report_generator.add_feature_correlation_page()
+    pdf_report_generator.add_data_visualization_pages()
     pdf_report_generator.add_class_imbalance_page()
     pdf_report_generator.save_pdf()
