@@ -20,6 +20,13 @@ class PDFReportGenerator(FPDF):
         self._target_column_name = target_column_name
         self._dataframe = load_dataset_as_dataframe(file_name)
 
+    def footer(self):
+        self.set_y(-15)  # Position the footer 15 units from the bottom
+        self.set_font("Arial", size=11)  # Set font and style for the footer
+        self.cell(
+            0, 10, f"{self.page_no()}", 0, 0, "C"
+        )  # Print the page number centered
+
     def _add_heading(self, message: str):
         self.set_font("Arial", size=20)
         self.cell(200, 10, message, align="C")
