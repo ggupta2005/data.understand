@@ -9,8 +9,8 @@ from data_understand.dataset_characteristics.characteristics import (
 from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
-from data_understand.value_distributions import \
-    save_cat_frequency_distributions
+from data_understand.value_distributions import (
+    save_cat_frequency_distributions, save_histogram_distributions)
 
 
 class PDFReportGenerator(FPDF):
@@ -105,6 +105,7 @@ class PDFReportGenerator(FPDF):
             multi_line=True,
         )
         self._add_cat_frequency_page()
+        self._add_value_distribution_page()
         self._add_feature_correlation_page()
 
     def _add_feature_correlation_page(self):
@@ -178,6 +179,44 @@ class PDFReportGenerator(FPDF):
 
         if index == 0:
             self._add_text("No categorical features exists in the dataset.")
+
+    def _add_value_distribution_page(self):
+        self.add_page()
+        self._add_sub_heading("Numerical value distribution")
+        save_histogram_distributions(self._dataframe)
+
+        index = 0
+        page_index = 0
+        while os.path.exists("value_distribution_{0}.png".format(index)):
+            if index > 0 and index % 4 == 0:
+                self.add_page()
+                page_index = 0
+
+            if page_index % 2 == 0:
+                self.image(
+                    "value_distribution_{0}.png".format(index),
+                    Align.L,
+                    y=40 + (page_index // 2) * 90,
+                    w=90,
+                    h=90,
+                    title="Numerical value distribution",
+                )
+            else:
+                self.image(
+                    "value_distribution_{0}.png".format(index),
+                    Align.R,
+                    y=40 + (page_index // 2) * 90,
+                    w=90,
+                    h=90,
+                    title="Numerical value distribution",
+                )
+            os.remove("value_distribution_{0}.png".format(index))
+
+            page_index += 1
+            index += 1
+
+        if index == 0:
+            self._add_text("No numerical features exists in the dataset.")
 
     def add_class_imbalance_page(self):
         # Add a new page
