@@ -38,6 +38,7 @@ def save_cat_frequency_distributions(df: pd.DataFrame) -> None:
         plt.ylabel("Count")
         plt.savefig("cat_frequency_{0}.png".format(index))
         index += 1
+        plt.clf()
 
 
 def get_jupyter_nb_code_to_generate_cat_frequency_distributions() -> (

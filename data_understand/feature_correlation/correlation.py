@@ -23,6 +23,7 @@ def save_correlation_matrices(df: pd.DataFrame) -> None:
     num_figures = _get_number_figures(df)
     scatter_matrix(df, figsize=(num_figures, num_figures))
     plt.savefig("correlation.png")
+    plt.clf()
 
 
 def get_jupyter_nb_code_to_generate_correlation_matrices() -> Tuple[str, str]:
