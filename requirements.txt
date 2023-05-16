@@ -3,3 +3,4 @@ nbformat
 matplotlib
 numpy
 fpdf2
+seaborn

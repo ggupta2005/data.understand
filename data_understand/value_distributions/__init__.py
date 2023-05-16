@@ -1,3 +1,4 @@
+from .box_plot_distribution import save_box_plot_distributions
 from .cat_frequency_distribution import (
     generate_cat_frequency_distributions,
     get_jupyter_nb_code_to_generate_cat_frequency_distributions,
@@ -14,4 +15,5 @@ __all__ = [
     "get_jupyter_nb_code_to_generate_cat_frequency_distributions",
     "save_cat_frequency_distributions",
     "save_histogram_distributions",
+    "save_box_plot_distributions",
 ]
