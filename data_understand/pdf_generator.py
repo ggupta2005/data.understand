@@ -21,6 +21,16 @@ class PDFReportGenerator(FPDF):
         self._target_column_name = target_column_name
         self._dataframe = load_dataset_as_dataframe(file_name)
 
+    def header(self):
+        # Add watermark in the header
+        self.set_font('Arial', 'B', 50)
+        self.set_text_color(128, 128, 128)
+        self.rotate(45)
+        self.text(-50, 150, 'data.understand')
+        self.rotate(0)
+        self.set_text_color(0, 0, 0)
+        self.set_font('Arial', '', 12)
+
     def footer(self):
         self.set_y(-15)  # Position the footer 15 units from the bottom
         self.set_font("Arial", size=11)  # Set font and style for the footer
