@@ -9,6 +9,7 @@ from data_understand.dataset_characteristics.characteristics import (
 from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
+from data_understand.messages import MAIN_MESSAGE
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
     save_histogram_distributions)
@@ -23,13 +24,13 @@ class PDFReportGenerator(FPDF):
 
     def header(self):
         # Add watermark in the header
-        self.set_font('Arial', 'B', 50)
+        self.set_font("Arial", "B", 50)
         self.set_text_color(128, 128, 128)
         self.rotate(45)
-        self.text(-50, 150, 'data.understand')
+        self.text(-50, 150, "data.understand")
         self.rotate(0)
         self.set_text_color(0, 0, 0)
-        self.set_font('Arial', '', 12)
+        self.set_font("Arial", "", 12)
 
     def footer(self):
         self.set_y(-15)  # Position the footer 15 units from the bottom
@@ -72,7 +73,7 @@ class PDFReportGenerator(FPDF):
             message="Understanding the data in " + self._file_name
         )
         self._add_text(
-            message="This PDF has different insights about your dataset."
+            message=MAIN_MESSAGE.format("PDF report"), multi_line=True
         )
 
     def add_index_page(self):

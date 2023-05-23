@@ -18,6 +18,7 @@ from data_understand.feature_correlation import (
     get_jupyter_nb_code_to_get_postively_correlated_feature_pairs)
 from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
+from data_understand.messages import MAIN_MESSAGE
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
 from data_understand.value_distributions import (
@@ -88,6 +89,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         class_imbalance_code,
     ) = get_jupyter_nb_code_to_find_target_column_imbalance()
     nb["cells"] = [
+        v4.new_markdown_cell(
+            source="# Understanding the data in " + args.file_name
+        ),
+        v4.new_markdown_cell(source=MAIN_MESSAGE.format("jupyter notebook")),
         v4.new_markdown_cell(source="## Read dataset and set target column"),
         v4.new_markdown_cell(source=dataframe_read_markdown),
         v4.new_code_cell(source=dataframe_read_code),
