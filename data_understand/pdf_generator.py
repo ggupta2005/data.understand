@@ -10,6 +10,7 @@ from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
 from data_understand.messages import MAIN_MESSAGE
+from data_understand.utils import measure_time
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
     save_histogram_distributions)
@@ -291,11 +292,9 @@ class PDFReportGenerator(FPDF):
         self.output(self._file_name + ".pdf")
 
 
+@measure_time
 def generate_pdf(args: Any) -> None:
-    dataframe = load_dataset_as_dataframe(args.file_name)
-    print(dataframe.shape[0])
-    print(dataframe.shape[1])
-
+    print("Generating PDF report for the dataset in " + args.file_name)
     pdf_report_generator = PDFReportGenerator(
         args.file_name, args.target_column
     )
@@ -305,3 +304,10 @@ def generate_pdf(args: Any) -> None:
     pdf_report_generator.add_data_visualization_pages()
     pdf_report_generator.add_class_imbalance_page()
     pdf_report_generator.save_pdf()
+    print(
+        "Successfully generated PDF report for the dataset in "
+        + args.file_name
+        + " at "
+        + args.file_name
+        + ".pdf"
+    )

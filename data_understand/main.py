@@ -1,11 +1,14 @@
 import argparse
+import warnings
 
 from data_understand.input_validations import validate_input_parameters
 from data_understand.jupyter_notebook_generator import \
     generate_jupyter_notebook
 from data_understand.pdf_generator import generate_pdf
+from data_understand.utils import measure_time
 
 
+@measure_time
 def parse_args():
     # Create Argument Parser
     parser = argparse.ArgumentParser(description="data.understand CLI")
@@ -32,6 +35,7 @@ def parse_args():
     args = parser.parse_args()
 
     # Access Parsed Values
+    print("The parsed arguments are:- ")
     print("file_name: " + str(args.file_name))
     print("target_column: " + str(args.target_column))
     print("generate_pdf: " + str(args.generate_pdf))
@@ -40,14 +44,18 @@ def parse_args():
     return args
 
 
+@measure_time
 def main():
+    warnings.filterwarnings("ignore")
     args = parse_args()
     validate_input_parameters(args)
+    print("Generating PDF report and jupyter notebook")
     if args.generate_pdf:
         generate_pdf(args)
 
     if args.generate_jupyter_notebook:
         generate_jupyter_notebook(args)
+    print("Successfully generated PDF report and jupyter notebook")
 
 
 if __name__ == "__main__":

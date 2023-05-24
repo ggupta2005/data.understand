@@ -21,12 +21,15 @@ from data_understand.load_dataset import \
 from data_understand.messages import MAIN_MESSAGE
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
+from data_understand.utils import measure_time
 from data_understand.value_distributions import (
     get_jupyter_nb_code_to_generate_cat_frequency_distributions,
     get_jupyter_nb_code_to_generate_histogram_distributions)
 
 
+@measure_time
 def generate_jupyter_notebook(args: Any) -> None:
+    print("Generating jupyter notebook for the dataset in " + args.file_name)
     nb = v4.new_notebook()
     nb.metadata["title"] = "Understanding the data in " + args.file_name
     (
@@ -133,3 +136,9 @@ def generate_jupyter_notebook(args: Any) -> None:
 
     with open(args.file_name + ".ipynb", "w") as f:
         nbformat.write(nb, f)
+    print(
+        "Successfully generated jupyter notebook for the dataset in "
+        + args.file_name
+        + " at "
+        + f.name
+    )
