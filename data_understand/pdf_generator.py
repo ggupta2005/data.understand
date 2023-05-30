@@ -10,7 +10,7 @@ from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
 from data_understand.messages import MAIN_MESSAGE
-from data_understand.utils import measure_time
+from data_understand.utils import get_ml_task_type, measure_time
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
     save_histogram_distributions)
@@ -101,6 +101,11 @@ class PDFReportGenerator(FPDF):
 
         self._add_text(
             "The name of the target column is: " + self._target_column_name,
+        )
+
+        self._add_text(
+            "The machine learning task based on your target column looks like: "
+            + get_ml_task_type(self._dataframe, self._target_column_name)
         )
 
         self._add_text(

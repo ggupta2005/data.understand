@@ -1,5 +1,8 @@
 import timeit
 
+import numpy as np
+import pandas as pd
+
 SEPARATOR_LENGTH = 120
 
 
@@ -19,3 +22,13 @@ def measure_time(compute_func):
 
 def get_separator(max_len: int) -> str:
     return "=" * max_len
+
+
+def get_ml_task_type(df: pd.DataFrame, target_column: str) -> str:
+    target_column_array = df[target_column].values
+    unique_array, element_counts = np.unique(
+        target_column_array, return_counts=True
+    )
+    if len(unique_array) > 0.1 * len(target_column_array):
+        return "Regression"
+    return "Classification"

@@ -3,19 +3,23 @@ from typing import Tuple
 import numpy as np
 import pandas as pd
 
+from data_understand.utils import get_ml_task_type
+
 
 def get_message_target_column_imbalance(
     df: pd.DataFrame, target_column: str
 ) -> str:
-    target_column_array = df[target_column].values
-    unique_array, element_counts = np.unique(
-        target_column_array, return_counts=True
-    )
-    if len(unique_array) > 0.1 * len(target_column_array):
+    if get_ml_task_type(df, target_column) == "Regression":
         return (
             "The target column values look to be continous in nature. "
             + "So cannot report class imbalance."
         )
+
+    target_column_array = df[target_column].values
+    unique_array, element_counts = np.unique(
+        target_column_array, return_counts=True
+    )
+
     max_class_count = max(element_counts)
     max_class = unique_array[
         np.argwhere(element_counts == max_class_count)[0][0]
