@@ -1,4 +1,4 @@
-name: Run Python Unit Tests
+name: Run Python E2E Tests
 
 on:
   push:
@@ -40,4 +40,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest  -m "not e2e_tests"
+          pytest -m "e2e_tests"
