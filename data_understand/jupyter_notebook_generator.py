@@ -18,7 +18,7 @@ from data_understand.feature_correlation import (
     get_jupyter_nb_code_to_get_postively_correlated_feature_pairs)
 from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
-from data_understand.messages import MAIN_MESSAGE
+from data_understand.messages import DATA_CHARATERISTICS_MESSAGE, MAIN_MESSAGE
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
 from data_understand.utils import measure_time
@@ -101,12 +101,16 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=dataframe_read_code),
         v4.new_markdown_cell(source=target_read_markdown),
         v4.new_code_cell(source=target_read_code),
-        v4.new_markdown_cell(source="## Display dataset statistics"),
+        v4.new_markdown_cell(
+            source=(
+                "## Display dataset statistics and characteristics\n"
+                + DATA_CHARATERISTICS_MESSAGE
+            )
+        ),
         v4.new_markdown_cell(source=dataframe_rows_markdown),
         v4.new_code_cell(source=dataframe_rows_code),
         v4.new_markdown_cell(source=dataframe_cols_markdown),
         v4.new_code_cell(source=dataframe_cols_code),
-        v4.new_markdown_cell(source="## Visualize characteristics of dataset"),
         v4.new_markdown_cell(source=dataframe_types_markdown),
         v4.new_code_cell(source=dataframe_types_code),
         v4.new_markdown_cell(source=missing_values_markdown),

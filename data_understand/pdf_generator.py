@@ -9,7 +9,7 @@ from data_understand.dataset_characteristics.characteristics import (
 from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
-from data_understand.messages import MAIN_MESSAGE
+from data_understand.messages import DATA_CHARATERISTICS_MESSAGE, MAIN_MESSAGE
 from data_understand.utils import get_ml_task_type, measure_time
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
@@ -89,6 +89,8 @@ class PDFReportGenerator(FPDF):
         # Add the dataset characteristics page
         self.add_page()
         self._add_heading("Chapter 1 - Dataset Charateristics")
+
+        self._add_text(message=DATA_CHARATERISTICS_MESSAGE, multi_line=True)
         self._add_text(
             "The number of rows in the dataset are: "
             + str(self._dataframe.shape[0])

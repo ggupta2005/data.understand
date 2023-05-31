@@ -25,3 +25,28 @@ MAIN_MESSAGE = (
     "imbalances and improving the performance of "
     "classification algorithms."
 )
+
+DATA_CHARATERISTICS_MESSAGE = (
+    "In this section we report basic cardinality of the dataset "
+    "like number of rows and number of columns. "
+    "We report the data types of the columns in the dataset. "
+    "Some columns are numeric, representing either integers or "
+    "floating-point values. Other columns are categorical, "
+    "containing string or object values. Additionally, there may "
+    "be datetime columns capturing specific timestamps or dates.\n\n"
+    "We also report whether any column in the dataset has missing values. "
+    "These missing values indicate instances "
+    "where data is not available or was not recorded for certain "
+    "records. Identifying and handling these missing values "
+    "appropriately is crucial to ensure accurate analysis.\n\n"
+    "Furthermore, the nature of the target variable in the dataset "
+    "is essential to determine the objective of analysis. If the "
+    "target variable is categorical, it implies a classification "
+    "problem, where the goal is to assign instances to specific "
+    "categories or classes. On the other hand, if the target "
+    "variable is numeric or continuous, it signifies a regression "
+    "problem, where the focus lies in predicting a numeric value "
+    "based on other variables.\n\nUnderstanding these various aspects "
+    "of the dataset lays the foundation for further exploration, "
+    "analysis, and modeling tasks."
+)
