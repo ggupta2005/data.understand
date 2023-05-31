@@ -1,2 +1,3 @@
 pytest
 scikit-learn
+rai_test_utils
