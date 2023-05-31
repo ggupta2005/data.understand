@@ -1,4 +1,4 @@
-name: Run Python Unit Tests
+name: Run Python E2E Tests
 
 on:
   push:
