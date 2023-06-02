@@ -5,7 +5,7 @@ import pytest
 from rai_test_utils.datasets.tabular import (create_diabetes_data,
                                              create_housing_data)
 
-from .common import TestE2ECommon
+from tests.e2e.common import TestE2ECommon
 
 
 @pytest.mark.e2e_tests()
