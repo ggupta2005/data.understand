@@ -2,12 +2,13 @@ import subprocess
 
 import pandas as pd
 import pytest
-from common import TestE2ECommon
 from rai_test_utils.datasets.tabular import (create_adult_census_data,
                                              create_cancer_data,
                                              create_iris_data,
                                              create_simple_titanic_data,
                                              create_wine_data)
+
+from . import TestE2ECommon
 
 
 @pytest.mark.e2e_tests()
