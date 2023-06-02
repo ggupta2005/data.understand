@@ -1,4 +1,3 @@
-import os
 import subprocess
 
 import pandas as pd
@@ -6,9 +5,11 @@ import pytest
 from rai_test_utils.datasets.tabular import (create_diabetes_data,
                                              create_housing_data)
 
+from .common import TestE2ECommon
+
 
 @pytest.mark.e2e_tests()
-class TestE2ERegression:
+class TestE2ERegression(TestE2ECommon):
     @pytest.mark.parametrize("dataset_name", ["diabetes", "housing"])
     def test_e2e_regression(self, dataset_name):
         dataset_to_fixture_dict = {
@@ -31,10 +32,10 @@ class TestE2ERegression:
             command, shell=True, capture_output=True, text=True
         )
         assert result.returncode == 0
-        assert os.path.exists(csv_file_name + ".pdf")
-        assert os.path.exists(csv_file_name + ".ipynb")
+
+        self.verify_if_files_generated(csv_file_name)
+        self.verify_jupyter_notebook(csv_file_name + ".ipynb")
+        self.verify_pdf_file(csv_file_name + ".pdf")
 
         # Clean up the temporary files
-        os.remove(csv_file_name)
-        os.remove(csv_file_name + ".pdf")
-        os.remove(csv_file_name + ".ipynb")
+        self.cleanup_generated_files(csv_file_name)
