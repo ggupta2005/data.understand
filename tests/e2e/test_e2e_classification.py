@@ -8,7 +8,7 @@ from rai_test_utils.datasets.tabular import (create_adult_census_data,
                                              create_simple_titanic_data,
                                              create_wine_data)
 
-from . import TestE2ECommon
+from .common import TestE2ECommon
 
 
 @pytest.mark.e2e_tests()
