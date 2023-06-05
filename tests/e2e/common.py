@@ -15,9 +15,9 @@ class TestE2ECommon:
         self._verify_jupyter_notebook_output_cells_are_empty(
             jupyter_notebook_file_name
         )
-        # self._run_and_verify_jupyter_notebook_output_cells(
-        #     jupyter_notebook_file_name
-        # )
+        self._run_and_verify_jupyter_notebook_output_cells(
+            jupyter_notebook_file_name
+        )
 
     def _verify_jupyter_notebook_output_cells_are_empty(
         self, jupyter_notebook_file_name
