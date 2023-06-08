@@ -40,4 +40,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -m "e2e_tests"
+          pytest -m "e2e_tests" --durations=10
