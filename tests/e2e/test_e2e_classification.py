@@ -39,8 +39,8 @@ class TestE2EClassification(TestE2ECommon):
             X_train = pd.DataFrame(data=X_train, columns=feature_names)
 
         X_train["target"] = y_train
-        X_train.to_csv(dataset_name + ".csv", index=False)
         csv_file_name = dataset_name + str(time.time()) + ".csv"
+        X_train.to_csv(csv_file_name, index=False)
 
         self.execute_and_verify_data_understand(
             csv_file_name, generate_jupyter_notebook, generate_pdf
