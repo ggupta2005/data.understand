@@ -2,3 +2,4 @@ flake8
 isort
 flake8-pytest-style
 flake8-breakpoint
+flake8-bugbear
