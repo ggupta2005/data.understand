@@ -1,3 +1,5 @@
+import time
+
 import pandas as pd
 import pytest
 from rai_test_utils.datasets.tabular import (create_adult_census_data,
@@ -38,7 +40,7 @@ class TestE2EClassification(TestE2ECommon):
 
         X_train["target"] = y_train
         X_train.to_csv(dataset_name + ".csv", index=False)
-        csv_file_name = dataset_name + ".csv"
+        csv_file_name = dataset_name + str(time.time()) + ".csv"
 
         self.execute_and_verify_data_understand(
             csv_file_name, generate_jupyter_notebook, generate_pdf
