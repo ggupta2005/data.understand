@@ -107,6 +107,7 @@ class TestE2ECommon:
             command, shell=True, capture_output=True, text=True
         )
         print(result.stdout)
+        print(result.stderr)
         assert result.returncode == 0
 
         self.verify_if_files_generated(
