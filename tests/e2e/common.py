@@ -106,6 +106,7 @@ class TestE2ECommon:
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True
         )
+        print(result.stdout)
         assert result.returncode == 0
 
         self.verify_if_files_generated(
