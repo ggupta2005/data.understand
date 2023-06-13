@@ -1,4 +1,4 @@
-import time
+import uuid
 
 import pandas as pd
 import pytest
@@ -39,7 +39,7 @@ class TestE2EClassification(TestE2ECommon):
             X_train = pd.DataFrame(data=X_train, columns=feature_names)
 
         X_train["target"] = y_train
-        csv_file_name = dataset_name + str(time.time()) + ".csv"
+        csv_file_name = dataset_name + str(uuid.uuid4()) + ".csv"
         X_train.to_csv(csv_file_name, index=False)
 
         self.execute_and_verify_data_understand(
