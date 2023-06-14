@@ -1,8 +1,10 @@
-from typing import Any, Tuple
+from typing import Any, List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+
+from data_understand.utils import construct_image_name
 
 
 def _get_histogram_distribution(data: np.ndarray) -> Tuple[Any, Any]:
@@ -47,9 +49,13 @@ def generate_histogram_distributions(df: pd.DataFrame) -> None:
         plt.show()
 
 
-def save_histogram_distributions(df: pd.DataFrame) -> None:
+def save_histogram_distributions(
+    df: pd.DataFrame, current_execution_uuid: str
+) -> List[str]:
     numeric_features = df.select_dtypes(include="number").columns.tolist()
     index = 0
+    saved_image_name_list = []
+
     for feature in numeric_features:
         x, plot = _get_histogram_distribution(df[feature].values)
         plt.plot(x, plot, color="red", linewidth=2, label="Gaussian PDF")
@@ -61,10 +67,15 @@ def save_histogram_distributions(df: pd.DataFrame) -> None:
 
         # Set the title
         plt.title("Distribution Plot")
-
-        plt.savefig("value_distribution_{0}.png".format(index))
+        saved_image_name = construct_image_name(
+            "value_distribution", current_execution_uuid, index
+        )
+        plt.savefig(saved_image_name)
+        saved_image_name_list.append(saved_image_name)
         index += 1
         plt.clf()
+
+    return saved_image_name_list
 
 
 def get_jupyter_nb_code_to_generate_histogram_distributions() -> (

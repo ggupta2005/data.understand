@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pandas.plotting import scatter_matrix
 
+from data_understand.utils import construct_image_name
+
 
 def _get_number_figures(df: pd.DataFrame) -> int:
     if df.shape[1] < 10:
@@ -19,11 +21,17 @@ def generate_correlation_matrices(df: pd.DataFrame) -> None:
     plt.show()
 
 
-def save_correlation_matrices(df: pd.DataFrame) -> None:
+def save_correlation_matrices(
+    df: pd.DataFrame, current_execution_uuid: str
+) -> str:
     num_figures = _get_number_figures(df)
     scatter_matrix(df, figsize=(num_figures, num_figures))
-    plt.savefig("correlation.png")
+    saved_image_name = construct_image_name(
+        "correlation", current_execution_uuid
+    )
+    plt.savefig(saved_image_name)
     plt.clf()
+    return saved_image_name
 
 
 def get_jupyter_nb_code_to_generate_correlation_matrices() -> Tuple[str, str]:

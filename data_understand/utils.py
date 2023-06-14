@@ -1,4 +1,5 @@
 import timeit
+from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -32,3 +33,22 @@ def get_ml_task_type(df: pd.DataFrame, target_column: str) -> str:
     if len(unique_array) > 0.1 * len(target_column_array):
         return "Regression"
     return "Classification"
+
+
+def construct_image_name(
+    image_name: str,
+    current_execution_uuid: str,
+    index: Optional[int] = None,
+    extension: Optional[str] = ".png",
+):
+    if index is not None:
+        return (
+            image_name
+            + "_"
+            + current_execution_uuid
+            + "_"
+            + str(index)
+            + extension
+        )
+    else:
+        return image_name + "_" + current_execution_uuid + extension
