@@ -1,4 +1,5 @@
 import os
+import uuid
 from typing import Any, Tuple
 
 from fpdf import FPDF, Align
@@ -22,6 +23,7 @@ class PDFReportGenerator(FPDF):
         self._file_name = file_name
         self._target_column_name = target_column_name
         self._dataframe = load_dataset_as_dataframe(file_name)
+        self._current_execution_uuid = str(uuid.uuid4())
 
     def header(self):
         # Add watermark in the header
@@ -158,33 +160,37 @@ class PDFReportGenerator(FPDF):
 
         self.add_page()
         self._add_text("Feature correlation graph for numerical features")
-        save_correlation_matrices(self._dataframe)
+        saved_file_name = save_correlation_matrices(
+            self._dataframe, self._current_execution_uuid
+        )
         # Add the image to the page
         self.image(
-            "correlation.png",
+            saved_file_name,
             Align.C,
             y=30,
             w=200,
             h=200,
             title="Correlation plots for numeric features",
         )
-        os.remove("correlation.png")
+        os.remove(saved_file_name)
 
     def _add_cat_frequency_page(self):
         self.add_page()
         self._add_sub_heading("Categorical feature distribution")
-        save_cat_frequency_distributions(self._dataframe)
+        saved_file_name_list = save_cat_frequency_distributions(
+            self._dataframe, self._current_execution_uuid
+        )
 
         index = 0
         page_index = 0
-        while os.path.exists("cat_frequency_{0}.png".format(index)):
+        while index < len(saved_file_name_list):
             if index > 0 and index % 4 == 0:
                 self.add_page()
                 page_index = 0
 
             if page_index % 2 == 0:
                 self.image(
-                    "cat_frequency_{0}.png".format(index),
+                    saved_file_name_list[index],
                     Align.L,
                     y=40 + (page_index // 2) * 90,
                     w=90,
@@ -193,14 +199,14 @@ class PDFReportGenerator(FPDF):
                 )
             else:
                 self.image(
-                    "cat_frequency_{0}.png".format(index),
+                    saved_file_name_list[index],
                     Align.R,
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
                     title="Categorical value distribution",
                 )
-            os.remove("cat_frequency_{0}.png".format(index))
+            os.remove(saved_file_name_list[index])
 
             page_index += 1
             index += 1
@@ -211,18 +217,20 @@ class PDFReportGenerator(FPDF):
     def _add_value_distribution_page(self):
         self.add_page()
         self._add_sub_heading("Numerical value distribution")
-        save_histogram_distributions(self._dataframe)
+        saved_file_name_list = save_histogram_distributions(
+            self._dataframe, self._current_execution_uuid
+        )
 
         index = 0
         page_index = 0
-        while os.path.exists("value_distribution_{0}.png".format(index)):
+        while index < len(saved_file_name_list):
             if index > 0 and index % 4 == 0:
                 self.add_page()
                 page_index = 0
 
             if page_index % 2 == 0:
                 self.image(
-                    "value_distribution_{0}.png".format(index),
+                    saved_file_name_list[index],
                     Align.L,
                     y=40 + (page_index // 2) * 90,
                     w=90,
@@ -231,14 +239,14 @@ class PDFReportGenerator(FPDF):
                 )
             else:
                 self.image(
-                    "value_distribution_{0}.png".format(index),
+                    saved_file_name_list[index],
                     Align.R,
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
                     title="Numerical value distribution",
                 )
-            os.remove("value_distribution_{0}.png".format(index))
+            os.remove(saved_file_name_list[index])
 
             page_index += 1
             index += 1
@@ -249,18 +257,20 @@ class PDFReportGenerator(FPDF):
     def _add_box_plot_page(self):
         self.add_page()
         self._add_sub_heading("Box plot distribution")
-        save_box_plot_distributions(self._dataframe)
+        saved_file_name_list = save_box_plot_distributions(
+            self._dataframe, self._current_execution_uuid
+        )
 
         index = 0
         page_index = 0
-        while os.path.exists("box_plot_{0}.png".format(index)):
+        while index < len(saved_file_name_list):
             if index > 0 and index % 4 == 0:
                 self.add_page()
                 page_index = 0
 
             if page_index % 2 == 0:
                 self.image(
-                    "box_plot_{0}.png".format(index),
+                    saved_file_name_list[index],
                     Align.L,
                     y=40 + (page_index // 2) * 90,
                     w=90,
@@ -269,14 +279,14 @@ class PDFReportGenerator(FPDF):
                 )
             else:
                 self.image(
-                    "box_plot_{0}.png".format(index),
+                    saved_file_name_list[index],
                     Align.R,
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
                     title="Categorical value distribution",
                 )
-            os.remove("box_plot_{0}.png".format(index))
+            os.remove(saved_file_name_list[index])
 
             page_index += 1
             index += 1
