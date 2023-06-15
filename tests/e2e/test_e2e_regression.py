@@ -3,6 +3,7 @@ import uuid
 import pandas as pd
 import pytest
 from rai_test_utils.datasets.tabular import (create_diabetes_data,
+                                             create_energy_data,
                                              create_housing_data)
 
 from .common import TestE2ECommon
@@ -10,7 +11,7 @@ from .common import TestE2ECommon
 
 @pytest.mark.e2e_tests()
 class TestE2ERegression(TestE2ECommon):
-    @pytest.mark.parametrize("dataset_name", ["diabetes", "housing"])
+    @pytest.mark.parametrize("dataset_name", ["diabetes", "housing", "energy"])
     @pytest.mark.parametrize("generate_jupyter_notebook", [True, False])
     @pytest.mark.parametrize("generate_pdf", [True, False])
     def test_e2e_regression(
@@ -19,6 +20,7 @@ class TestE2ERegression(TestE2ECommon):
         dataset_to_fixture_dict = {
             "diabetes": create_diabetes_data,
             "housing": create_housing_data,
+            "energy": create_energy_data,
         }
         dataset = dataset_to_fixture_dict[dataset_name]
         X_train, X_test, y_train, y_test, feature_names = dataset()
