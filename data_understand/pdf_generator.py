@@ -1,6 +1,6 @@
 import os
 import uuid
-from typing import Any, Tuple
+from typing import Any, Tuple, List
 
 from fpdf import FPDF, Align
 
@@ -181,6 +181,14 @@ class PDFReportGenerator(FPDF):
             self._dataframe, self._current_execution_uuid
         )
 
+        self._add_multiple_images(
+            saved_file_name_list=saved_file_name_list,
+            title="Categorical value distribution")
+
+        if len(saved_file_name_list) == 0:
+            self._add_text("No categorical features exists in the dataset.")
+
+    def _add_multiple_images(self, saved_file_name_list: List[str], title: str) -> None:
         index = 0
         page_index = 0
         while index < len(saved_file_name_list):
@@ -195,7 +203,7 @@ class PDFReportGenerator(FPDF):
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
-                    title="Categorical value distribution",
+                    title=title
                 )
             else:
                 self.image(
@@ -204,15 +212,12 @@ class PDFReportGenerator(FPDF):
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
-                    title="Categorical value distribution",
+                    title=title
                 )
             os.remove(saved_file_name_list[index])
 
             page_index += 1
             index += 1
-
-        if index == 0:
-            self._add_text("No categorical features exists in the dataset.")
 
     def _add_value_distribution_page(self):
         self.add_page()
@@ -221,37 +226,11 @@ class PDFReportGenerator(FPDF):
             self._dataframe, self._current_execution_uuid
         )
 
-        index = 0
-        page_index = 0
-        while index < len(saved_file_name_list):
-            if index > 0 and index % 4 == 0:
-                self.add_page()
-                page_index = 0
+        self._add_multiple_images(
+            saved_file_name_list=saved_file_name_list,
+            title="Numerical value distribution")
 
-            if page_index % 2 == 0:
-                self.image(
-                    saved_file_name_list[index],
-                    Align.L,
-                    y=40 + (page_index // 2) * 90,
-                    w=90,
-                    h=90,
-                    title="Numerical value distribution",
-                )
-            else:
-                self.image(
-                    saved_file_name_list[index],
-                    Align.R,
-                    y=40 + (page_index // 2) * 90,
-                    w=90,
-                    h=90,
-                    title="Numerical value distribution",
-                )
-            os.remove(saved_file_name_list[index])
-
-            page_index += 1
-            index += 1
-
-        if index == 0:
+        if len(saved_file_name_list) == 0:
             self._add_text("No numerical features exists in the dataset.")
 
     def _add_box_plot_page(self):
@@ -261,37 +240,11 @@ class PDFReportGenerator(FPDF):
             self._dataframe, self._current_execution_uuid
         )
 
-        index = 0
-        page_index = 0
-        while index < len(saved_file_name_list):
-            if index > 0 and index % 4 == 0:
-                self.add_page()
-                page_index = 0
+        self._add_multiple_images(
+            saved_file_name_list=saved_file_name_list,
+            title="Box Plot distribution")
 
-            if page_index % 2 == 0:
-                self.image(
-                    saved_file_name_list[index],
-                    Align.L,
-                    y=40 + (page_index // 2) * 90,
-                    w=90,
-                    h=90,
-                    title="Categorical value distribution",
-                )
-            else:
-                self.image(
-                    saved_file_name_list[index],
-                    Align.R,
-                    y=40 + (page_index // 2) * 90,
-                    w=90,
-                    h=90,
-                    title="Categorical value distribution",
-                )
-            os.remove(saved_file_name_list[index])
-
-            page_index += 1
-            index += 1
-
-        if index == 0:
+        if len(saved_file_name_list) == 0:
             self._add_text("No categorical features exists in the dataset.")
 
     def add_class_imbalance_page(self):
