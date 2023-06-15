@@ -1,6 +1,6 @@
 import os
 import uuid
-from typing import Any, Tuple, List
+from typing import Any, List, Tuple
 
 from fpdf import FPDF, Align
 
@@ -183,12 +183,15 @@ class PDFReportGenerator(FPDF):
 
         self._add_multiple_images(
             saved_file_name_list=saved_file_name_list,
-            title="Categorical value distribution")
+            title="Categorical value distribution",
+        )
 
         if len(saved_file_name_list) == 0:
             self._add_text("No categorical features exists in the dataset.")
 
-    def _add_multiple_images(self, saved_file_name_list: List[str], title: str) -> None:
+    def _add_multiple_images(
+        self, saved_file_name_list: List[str], title: str
+    ) -> None:
         index = 0
         page_index = 0
         while index < len(saved_file_name_list):
@@ -203,7 +206,7 @@ class PDFReportGenerator(FPDF):
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
-                    title=title
+                    title=title,
                 )
             else:
                 self.image(
@@ -212,7 +215,7 @@ class PDFReportGenerator(FPDF):
                     y=40 + (page_index // 2) * 90,
                     w=90,
                     h=90,
-                    title=title
+                    title=title,
                 )
             os.remove(saved_file_name_list[index])
 
@@ -228,7 +231,8 @@ class PDFReportGenerator(FPDF):
 
         self._add_multiple_images(
             saved_file_name_list=saved_file_name_list,
-            title="Numerical value distribution")
+            title="Numerical value distribution",
+        )
 
         if len(saved_file_name_list) == 0:
             self._add_text("No numerical features exists in the dataset.")
@@ -242,7 +246,8 @@ class PDFReportGenerator(FPDF):
 
         self._add_multiple_images(
             saved_file_name_list=saved_file_name_list,
-            title="Box Plot distribution")
+            title="Box Plot distribution",
+        )
 
         if len(saved_file_name_list) == 0:
             self._add_text("No categorical features exists in the dataset.")
