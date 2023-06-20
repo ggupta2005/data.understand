@@ -52,13 +52,12 @@ DATA_CHARATERISTICS_MESSAGE = (
 )
 
 DATA_VISUALIZATION_MESSAGE = (
-    "This section have graphs and tables using which you can "
+    "This section have different graphs using which you can "
     "visualize distibutions of different features in your dataset, "
     "visualize the distibution of various categories for "
     "categorical features, visualize the histogram distribution "
-    "of numerical features, visualize the box plot distribution "
-    "between categories in categorical columns and numerical columns "
-    "and find correlations between different numerical features."
+    "of numerical features and visualize the box plot distribution "
+    "between categories in categorical columns and numerical columns."
 )
 
 CATEGORICAL_DISTRIBUTION_MESSAGE = (
@@ -81,7 +80,14 @@ NUMERICAL_VALUE_DISTRIBUTION_MESSAGE = (
 BOX_PLOT_DISTRIBUTION_MESSAGE = (
     "The section shows the box plot distribution of between "
     "the categories in categorical columns and numerical values "
-    "in a numerical column. These graphs helps in uncovering "
+    "in a numerical column. These graphs help in uncovering "
     "patterns that exist between various categories in a "
     "categorical column with the values in the numerical columns."
+)
+
+FEATURE_CORRELATION_MESSAGE = (
+    "This section shows the numerical feature pairs having "
+    "positive and negative correlation. The correlation have been "
+    "computed using [Pearson correlation coefficient]"
+    "(https://en.wikipedia.org/wiki/Pearson_correlation_coefficient)"
 )

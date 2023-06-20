@@ -13,7 +13,9 @@ from data_understand.load_dataset import load_dataset_as_dataframe
 from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       CATEGORICAL_DISTRIBUTION_MESSAGE,
                                       DATA_CHARATERISTICS_MESSAGE,
-                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE,
+                                      DATA_VISUALIZATION_MESSAGE,
+                                      FEATURE_CORRELATION_MESSAGE,
+                                      MAIN_MESSAGE,
                                       NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
 from data_understand.utils import get_ml_task_type, measure_time
 from data_understand.value_distributions import (
@@ -59,7 +61,7 @@ class PDFReportGenerator(FPDF):
     def _add_text(self, message: str, multi_line=False):
         self.set_font("Arial", size=11)
         if multi_line:
-            self.multi_cell(0, 10, message)
+            self.multi_cell(0, 10, message, markdown=True)
         else:
             self.cell(0, 10, message)
         self.ln()
@@ -88,7 +90,10 @@ class PDFReportGenerator(FPDF):
         self._add_sub_heading(message="Index")
         self._add_text("Chapter 1 - Dataset Charateristics")
         self._add_text("Chapter 2 - Visualize distributions of the dataset")
-        self._add_text("Chapter 3 - Class Imbalance")
+        self._add_text(
+            "Chapter 3 - Feature correlations between numerical features"
+        )
+        self._add_text("Chapter 4 - Class Imbalance")
 
     def add_data_characteristics_page(self):
         # Add the dataset characteristics page
@@ -132,43 +137,6 @@ class PDFReportGenerator(FPDF):
         self._add_cat_frequency_page()
         self._add_value_distribution_page()
         self._add_box_plot_page()
-        self._add_feature_correlation_page()
-
-    def _add_feature_correlation_page(self):
-        self.add_page()
-        self._add_sub_heading("Feature Correlations")
-
-        positive_feature_correlation_table = get_feature_correlations_as_tuple(
-            self._dataframe, 5, True
-        )
-        self._add_table(
-            "Top five positive feature correlations",
-            positive_feature_correlation_table,
-        )
-
-        negative_feature_correlation_table = get_feature_correlations_as_tuple(
-            self._dataframe, 5, False
-        )
-        self._add_table(
-            "Top five negative feature correlations",
-            negative_feature_correlation_table,
-        )
-
-        self.add_page()
-        self._add_text("Feature correlation graph for numerical features")
-        saved_file_name = save_correlation_matrices(
-            self._dataframe, self._current_execution_uuid
-        )
-        # Add the image to the page
-        self.image(
-            saved_file_name,
-            Align.C,
-            y=30,
-            w=200,
-            h=200,
-            title="Correlation plots for numeric features",
-        )
-        os.remove(saved_file_name)
 
     def _add_cat_frequency_page(self):
         self.add_page()
@@ -251,6 +219,48 @@ class PDFReportGenerator(FPDF):
         if len(saved_file_name_list) == 0:
             self._add_text("No categorical features exists in the dataset.")
 
+    def add_feature_correlation_page(self):
+        self._add_feature_correlation_page()
+
+    def _add_feature_correlation_page(self):
+        self.add_page()
+        self._add_heading(
+            "Chapter 3 - Feature correlations between numerical features"
+        )
+        self._add_text(FEATURE_CORRELATION_MESSAGE, multi_line=True)
+
+        positive_feature_correlation_table = get_feature_correlations_as_tuple(
+            self._dataframe, 5, True
+        )
+        self._add_table(
+            "Top five positive feature correlations",
+            positive_feature_correlation_table,
+        )
+
+        negative_feature_correlation_table = get_feature_correlations_as_tuple(
+            self._dataframe, 5, False
+        )
+        self._add_table(
+            "Top five negative feature correlations",
+            negative_feature_correlation_table,
+        )
+
+        self.add_page()
+        self._add_text("Feature correlation graph for numerical features")
+        saved_file_name = save_correlation_matrices(
+            self._dataframe, self._current_execution_uuid
+        )
+        # Add the image to the page
+        self.image(
+            saved_file_name,
+            Align.C,
+            y=30,
+            w=200,
+            h=200,
+            title="Correlation plots for numeric features",
+        )
+        os.remove(saved_file_name)
+
     def add_class_imbalance_page(self):
         # Add a new page
         self.add_page()
@@ -276,6 +286,7 @@ def generate_pdf(args: Any) -> None:
     pdf_report_generator.add_index_page()
     pdf_report_generator.add_data_characteristics_page()
     pdf_report_generator.add_data_visualization_pages()
+    pdf_report_generator.add_feature_correlation_page()
     pdf_report_generator.add_class_imbalance_page()
     pdf_report_generator.save_pdf()
     print(

@@ -21,7 +21,9 @@ from data_understand.load_dataset import \
 from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       CATEGORICAL_DISTRIBUTION_MESSAGE,
                                       DATA_CHARATERISTICS_MESSAGE,
-                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE,
+                                      DATA_VISUALIZATION_MESSAGE,
+                                      FEATURE_CORRELATION_MESSAGE,
+                                      MAIN_MESSAGE,
                                       NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
@@ -37,6 +39,7 @@ def generate_jupyter_notebook(args: Any) -> None:
     print("Generating jupyter notebook for the dataset in " + args.file_name)
     nb = v4.new_notebook()
     nb.metadata["title"] = "Understanding the data in " + args.file_name
+
     (
         dataframe_read_markdown,
         dataframe_read_code,
@@ -49,21 +52,23 @@ def generate_jupyter_notebook(args: Any) -> None:
         dataframe_rows_markdown,
         dataframe_rows_code,
     ) = get_jupyter_nb_code_to_dataframe_num_rows()
-
     (
         dataframe_cols_markdown,
         dataframe_cols_code,
     ) = get_jupyter_nb_code_to_dataframe_num_cols()
-
     (
         dataframe_types_markdown,
         dataframe_types_code,
     ) = get_jupyter_nb_code_to_dataframe_types()
-
     (
         dataframe_head_markdown,
         dataframe_head_code,
     ) = get_jupyter_nb_code_to_dataframe_head()
+    (
+        missing_values_markdown,
+        missing_values_code,
+    ) = get_jupyter_nb_code_to_find_columns_having_missing_values()
+
     (
         historgram_markdown,
         histogram_code,
@@ -73,13 +78,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         box_plot_code,
     ) = get_jupyter_nb_code_to_generate_box_plot_distributions()
     (
-        missing_values_markdown,
-        missing_values_code,
-    ) = get_jupyter_nb_code_to_find_columns_having_missing_values()
-    (
         frequency_markdown,
         frequency_code,
     ) = get_jupyter_nb_code_to_generate_cat_frequency_distributions()
+
     (
         positive_correlation_markdown,
         positive_correlation_code,
@@ -92,10 +94,7 @@ def generate_jupyter_notebook(args: Any) -> None:
         feature_correlation_markdown,
         feature_correlation_code,
     ) = get_jupyter_nb_code_to_generate_correlation_matrices()
-    (
-        feature_correlation_markdown,
-        feature_correlation_code,
-    ) = get_jupyter_nb_code_to_generate_correlation_matrices()
+
     (
         class_imbalance_markdown,
         class_imbalance_code,
@@ -148,6 +147,9 @@ def generate_jupyter_notebook(args: Any) -> None:
             source=(box_plot_markdown + "\n" + BOX_PLOT_DISTRIBUTION_MESSAGE)
         ),
         v4.new_code_cell(source=box_plot_code),
+        v4.new_markdown_cell(
+            source=("## Feature Correlations\n" + FEATURE_CORRELATION_MESSAGE)
+        ),
         v4.new_markdown_cell(source=positive_correlation_markdown),
         v4.new_code_cell(source=positive_correlation_code),
         v4.new_markdown_cell(source=negative_correlation_markdown),
