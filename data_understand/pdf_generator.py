@@ -10,8 +10,11 @@ from data_understand.dataset_characteristics.characteristics import (
 from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
-from data_understand.messages import (DATA_CHARATERISTICS_MESSAGE,
-                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE)
+from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
+                                      CATEGORICAL_DISTRIBUTION_MESSAGE,
+                                      DATA_CHARATERISTICS_MESSAGE,
+                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE,
+                                      NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
 from data_understand.utils import get_ml_task_type, measure_time
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
@@ -170,6 +173,7 @@ class PDFReportGenerator(FPDF):
     def _add_cat_frequency_page(self):
         self.add_page()
         self._add_sub_heading("Categorical feature distribution")
+        self._add_text(CATEGORICAL_DISTRIBUTION_MESSAGE, multi_line=True)
         saved_file_name_list = save_cat_frequency_distributions(
             self._dataframe, self._current_execution_uuid
         )
@@ -218,6 +222,7 @@ class PDFReportGenerator(FPDF):
     def _add_value_distribution_page(self):
         self.add_page()
         self._add_sub_heading("Numerical value distribution")
+        self._add_text(NUMERICAL_VALUE_DISTRIBUTION_MESSAGE, multi_line=True)
         saved_file_name_list = save_histogram_distributions(
             self._dataframe, self._current_execution_uuid
         )
@@ -233,6 +238,7 @@ class PDFReportGenerator(FPDF):
     def _add_box_plot_page(self):
         self.add_page()
         self._add_sub_heading("Box plot distribution")
+        self._add_text(BOX_PLOT_DISTRIBUTION_MESSAGE, multi_line=True)
         saved_file_name_list = save_box_plot_distributions(
             self._dataframe, self._current_execution_uuid
         )

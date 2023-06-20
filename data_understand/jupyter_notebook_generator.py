@@ -18,8 +18,11 @@ from data_understand.feature_correlation import (
     get_jupyter_nb_code_to_get_postively_correlated_feature_pairs)
 from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
-from data_understand.messages import (DATA_CHARATERISTICS_MESSAGE,
-                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE)
+from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
+                                      CATEGORICAL_DISTRIBUTION_MESSAGE,
+                                      DATA_CHARATERISTICS_MESSAGE,
+                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE,
+                                      NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
 from data_understand.utils import measure_time
@@ -127,11 +130,23 @@ def generate_jupyter_notebook(args: Any) -> None:
             source="## Visualize distributions of the dataset\n"
             + DATA_VISUALIZATION_MESSAGE
         ),
-        v4.new_markdown_cell(source=historgram_markdown),
+        v4.new_markdown_cell(
+            source=(
+                historgram_markdown
+                + "\n"
+                + NUMERICAL_VALUE_DISTRIBUTION_MESSAGE
+            )
+        ),
         v4.new_code_cell(source=histogram_code),
-        v4.new_markdown_cell(source=frequency_markdown),
+        v4.new_markdown_cell(
+            source=(
+                frequency_markdown + "\n" + CATEGORICAL_DISTRIBUTION_MESSAGE
+            )
+        ),
         v4.new_code_cell(source=frequency_code),
-        v4.new_markdown_cell(source=box_plot_markdown),
+        v4.new_markdown_cell(
+            source=(box_plot_markdown + "\n" + BOX_PLOT_DISTRIBUTION_MESSAGE)
+        ),
         v4.new_code_cell(source=box_plot_code),
         v4.new_markdown_cell(source=positive_correlation_markdown),
         v4.new_code_cell(source=positive_correlation_code),

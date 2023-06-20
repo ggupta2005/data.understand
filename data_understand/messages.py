@@ -55,6 +55,33 @@ DATA_VISUALIZATION_MESSAGE = (
     "This section have graphs and tables using which you can "
     "visualize distibutions of different features in your dataset, "
     "visualize the distibution of various categories for "
-    "categorical features and find correlations between "
-    "different features."
+    "categorical features, visualize the histogram distribution "
+    "of numerical features, visualize the box plot distribution "
+    "between categories in categorical columns and numerical columns "
+    "and find correlations between different numerical features."
+)
+
+CATEGORICAL_DISTRIBUTION_MESSAGE = (
+    "The section shows the distribution of individual categories "
+    "in a given categorical column. The distribution helps to "
+    "understand which categories in a given column are most/least "
+    "prevelant in your dataset."
+)
+
+NUMERICAL_VALUE_DISTRIBUTION_MESSAGE = (
+    "The section shows the histogram distribution of various "
+    "numerical features in your dataset. The graphs also show "
+    "a line chart which helps understand how the normal distribution "
+    "will look if the numerical values in the distribution were "
+    "normally distributed. These graphs also help gauge if the "
+    "distibution of data in a particular column in skewed in any "
+    "direction."
+)
+
+BOX_PLOT_DISTRIBUTION_MESSAGE = (
+    "The section shows the box plot distribution of between "
+    "the categories in categorical columns and numerical values "
+    "in a numerical column. These graphs helps in uncovering "
+    "patterns that exist between various categories in a "
+    "categorical column with the values in the numerical columns."
 )
