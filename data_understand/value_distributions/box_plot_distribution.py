@@ -54,8 +54,10 @@ def generate_box_plot_distributions(df: pd.DataFrame) -> None:
 def get_jupyter_nb_code_to_generate_box_plot_distributions() -> (
     Tuple[str, str]
 ):
-    markdown = "### Generate box plot distributions between " + \
-        "categories in catergorical and numerical features"
+    markdown = (
+        "### Generate box plot distributions between "
+        + "categories in catergorical and numerical features"
+    )
     code = (
         "from data_understand.value_distributions import "
         + "generate_box_plot_distributions\n"

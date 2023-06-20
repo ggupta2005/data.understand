@@ -50,3 +50,11 @@ DATA_CHARATERISTICS_MESSAGE = (
     "of the dataset lays the foundation for further exploration, "
     "analysis, and modeling tasks."
 )
+
+DATA_VISUALIZATION_MESSAGE = (
+    "This section have graphs and tables using which you can "
+    "visualize distibutions of different features in your dataset, "
+    "visualize the distibution of various categories for "
+    "categorical features and find correlations between "
+    "different features."
+)

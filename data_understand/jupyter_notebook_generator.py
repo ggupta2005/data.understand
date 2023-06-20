@@ -18,7 +18,8 @@ from data_understand.feature_correlation import (
     get_jupyter_nb_code_to_get_postively_correlated_feature_pairs)
 from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
-from data_understand.messages import DATA_CHARATERISTICS_MESSAGE, MAIN_MESSAGE
+from data_understand.messages import (DATA_CHARATERISTICS_MESSAGE,
+                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE)
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
 from data_understand.utils import measure_time
@@ -123,7 +124,8 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_markdown_cell(source=dataframe_head_markdown),
         v4.new_code_cell(source=dataframe_head_code),
         v4.new_markdown_cell(
-            source="## Visualize distributions of the dataset"
+            source="## Visualize distributions of the dataset\n"
+            + DATA_VISUALIZATION_MESSAGE
         ),
         v4.new_markdown_cell(source=historgram_markdown),
         v4.new_code_cell(source=histogram_code),

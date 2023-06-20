@@ -10,7 +10,8 @@ from data_understand.dataset_characteristics.characteristics import (
 from data_understand.feature_correlation import (
     get_feature_correlations_as_tuple, save_correlation_matrices)
 from data_understand.load_dataset import load_dataset_as_dataframe
-from data_understand.messages import DATA_CHARATERISTICS_MESSAGE, MAIN_MESSAGE
+from data_understand.messages import (DATA_CHARATERISTICS_MESSAGE,
+                                      DATA_VISUALIZATION_MESSAGE, MAIN_MESSAGE)
 from data_understand.utils import get_ml_task_type, measure_time
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
@@ -70,7 +71,6 @@ class PDFReportGenerator(FPDF):
         self.ln()
 
     def add_title_and_description_page(self):
-        # Add the first page
         self.add_page()
         self._add_heading(
             message="Understanding the data in " + self._file_name
@@ -125,14 +125,7 @@ class PDFReportGenerator(FPDF):
     def add_data_visualization_pages(self):
         self.add_page()
         self._add_heading("Chapter 2 - Visualize distributions of the dataset")
-        self._add_text(
-            "This section have graphs and tables using which you can "
-            "visualize distibutions of different features in your dataset, "
-            "visualize the distibution of various categories for "
-            "categorical features and find correlations between "
-            "different features.",
-            multi_line=True,
-        )
+        self._add_text(DATA_VISUALIZATION_MESSAGE, multi_line=True)
         self._add_cat_frequency_page()
         self._add_value_distribution_page()
         self._add_box_plot_page()
