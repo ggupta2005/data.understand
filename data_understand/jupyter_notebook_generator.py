@@ -23,6 +23,7 @@ from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
 from data_understand.utils import measure_time
 from data_understand.value_distributions import (
+    get_jupyter_nb_code_to_generate_box_plot_distributions,
     get_jupyter_nb_code_to_generate_cat_frequency_distributions,
     get_jupyter_nb_code_to_generate_histogram_distributions)
 
@@ -63,6 +64,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         historgram_markdown,
         histogram_code,
     ) = get_jupyter_nb_code_to_generate_histogram_distributions()
+    (
+        box_plot_markdown,
+        box_plot_code,
+    ) = get_jupyter_nb_code_to_generate_box_plot_distributions()
     (
         missing_values_markdown,
         missing_values_code,
@@ -124,6 +129,8 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=histogram_code),
         v4.new_markdown_cell(source=frequency_markdown),
         v4.new_code_cell(source=frequency_code),
+        v4.new_markdown_cell(source=box_plot_markdown),
+        v4.new_code_cell(source=box_plot_code),
         v4.new_markdown_cell(source=positive_correlation_markdown),
         v4.new_code_cell(source=positive_correlation_code),
         v4.new_markdown_cell(source=negative_correlation_markdown),
