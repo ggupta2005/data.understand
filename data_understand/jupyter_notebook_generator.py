@@ -20,8 +20,10 @@ from data_understand.load_dataset import \
     get_jupyter_nb_code_to_read_as_dataframe
 from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       CATEGORICAL_DISTRIBUTION_MESSAGE,
+                                      CLASS_IMBALANCE_MESSAGE,
                                       DATA_CHARATERISTICS_MESSAGE,
                                       DATA_VISUALIZATION_MESSAGE,
+                                      FEATURE_CORRELATION_GRAPH_MESSAGE,
                                       FEATURE_CORRELATION_MESSAGE,
                                       MAIN_MESSAGE,
                                       NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
@@ -154,11 +156,19 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=positive_correlation_code),
         v4.new_markdown_cell(source=negative_correlation_markdown),
         v4.new_code_cell(source=negative_correlation_code),
-        v4.new_markdown_cell(source=feature_correlation_markdown),
+        v4.new_markdown_cell(
+            source=(
+                feature_correlation_markdown
+                + "\n"
+                + FEATURE_CORRELATION_GRAPH_MESSAGE
+            )
+        ),
         v4.new_code_cell(source=feature_correlation_code),
         v4.new_markdown_cell(
-            source="## Find target column imbalances in "
-            "classification scenarios"
+            source=(
+                "## Find target column imbalances in "
+                "classification scenarios\n" + CLASS_IMBALANCE_MESSAGE
+            )
         ),
         v4.new_markdown_cell(source=class_imbalance_markdown),
         v4.new_code_cell(source=class_imbalance_code),

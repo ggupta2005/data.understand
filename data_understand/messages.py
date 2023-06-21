@@ -89,5 +89,24 @@ FEATURE_CORRELATION_MESSAGE = (
     "This section shows the numerical feature pairs having "
     "positive and negative correlation. The correlation have been "
     "computed using [Pearson correlation coefficient]"
-    "(https://en.wikipedia.org/wiki/Pearson_correlation_coefficient)"
+    "(https://en.wikipedia.org/wiki/Pearson_correlation_coefficient). "
+    "Examination of feature correlation can help find if the data "
+    "has [leaky features]"
+    "(https://en.wikipedia.org/wiki/Leakage_(machine_learning))."
+)
+
+FEATURE_CORRELATION_GRAPH_MESSAGE = (
+    "Feature correlation graph showing the scatter plot "
+    "between any two numerical features. This graph helps to "
+    "understand if there are any correlation between numerical "
+    "features."
+)
+
+CLASS_IMBALANCE_MESSAGE = (
+    "In this section we show statistics to bring out the imbalance "
+    "between the different classes in the target column for a "
+    "classification problem. This will help you learn if you need "
+    "to address the issue of [class imbalance]"
+    "(https://developers.google.com/machine-learning/data-prep/"
+    "construct/sampling-splitting/imbalanced-data) in your dataset."
 )

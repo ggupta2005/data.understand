@@ -12,8 +12,10 @@ from data_understand.feature_correlation import (
 from data_understand.load_dataset import load_dataset_as_dataframe
 from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       CATEGORICAL_DISTRIBUTION_MESSAGE,
+                                      CLASS_IMBALANCE_MESSAGE,
                                       DATA_CHARATERISTICS_MESSAGE,
                                       DATA_VISUALIZATION_MESSAGE,
+                                      FEATURE_CORRELATION_GRAPH_MESSAGE,
                                       FEATURE_CORRELATION_MESSAGE,
                                       MAIN_MESSAGE,
                                       NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
@@ -246,7 +248,7 @@ class PDFReportGenerator(FPDF):
         )
 
         self.add_page()
-        self._add_text("Feature correlation graph for numerical features")
+        self._add_text(FEATURE_CORRELATION_GRAPH_MESSAGE, multi_line=True)
         saved_file_name = save_correlation_matrices(
             self._dataframe, self._current_execution_uuid
         )
@@ -264,7 +266,8 @@ class PDFReportGenerator(FPDF):
     def add_class_imbalance_page(self):
         # Add a new page
         self.add_page()
-        self._add_heading("Chapter 3 - Class Imbalance")
+        self._add_heading("Chapter 4 - Class Imbalance")
+        self._add_text(CLASS_IMBALANCE_MESSAGE, multi_line=True)
         self._add_text(
             get_message_target_column_imbalance(
                 self._dataframe, self._target_column_name
