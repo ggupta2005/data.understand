@@ -1,3 +1,5 @@
+from data_understand.constants import URLS
+
 MAIN_MESSAGE = (
     "The {0} provides a comprehensive analysis of "
     "tabular data, focusing on various characteristics such "
@@ -89,10 +91,12 @@ FEATURE_CORRELATION_MESSAGE = (
     "This section shows the numerical feature pairs having "
     "positive and negative correlation. The correlation have been "
     "computed using [Pearson correlation coefficient]"
-    "(https://en.wikipedia.org/wiki/Pearson_correlation_coefficient). "
+    "({0}). "
     "Examination of feature correlation can help find if the data "
     "has [leaky features]"
-    "(https://en.wikipedia.org/wiki/Leakage_(machine_learning))."
+    "({1}).".format(
+        URLS["Pearson correlation coefficient"], URLS["leaky features"]
+    )
 )
 
 FEATURE_CORRELATION_GRAPH_MESSAGE = (
@@ -107,6 +111,5 @@ CLASS_IMBALANCE_MESSAGE = (
     "between the different classes in the target column for a "
     "classification problem. This will help you learn if you need "
     "to address the issue of [class imbalance]"
-    "(https://developers.google.com/machine-learning/data-prep/"
-    "construct/sampling-splitting/imbalanced-data) in your dataset."
+    "({0}) in your dataset.".format(URLS["class imbalance"])
 )
