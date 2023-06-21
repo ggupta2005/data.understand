@@ -35,7 +35,7 @@ def save_correlation_matrices(
 
 
 def get_jupyter_nb_code_to_generate_correlation_matrices() -> Tuple[str, str]:
-    markdown = "### Generate feature correlation for numerical features"
+    markdown = "### Generate feature correlation graph for numerical features"
     code = (
         "from data_understand.feature_correlation import "
         + "generate_correlation_matrices\n"
