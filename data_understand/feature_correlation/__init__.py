@@ -1,4 +1,6 @@
-from .correlation import (
+"""Module for feature correlations."""
+
+from data_understand.feature_correlation.correlation import (
     generate_correlation_matrices, get_feature_correlations_as_tuple,
     get_jupyter_nb_code_to_generate_correlation_matrices,
     get_jupyter_nb_code_to_get_negatively_correlated_feature_pairs,

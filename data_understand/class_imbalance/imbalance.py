@@ -1,3 +1,5 @@
+"""Module for computing imbalance in target column."""
+
 from typing import Tuple
 
 import numpy as np
@@ -9,6 +11,15 @@ from data_understand.utils import get_ml_task_type
 def get_message_target_column_imbalance(
     df: pd.DataFrame, target_column: str
 ) -> str:
+    """Get message for target column imbalance.
+
+    param df: The dataframe to be analyzed.
+    type df: pandas.core.frame.DataFrame
+    param target_column: The name of the target column.
+    type target_column: str
+    return: The message for target column imbalance.
+    rtype: str
+    """
     if get_ml_task_type(df, target_column) == "Regression":
         return (
             "The target column values look to be continous in nature. "
@@ -48,10 +59,23 @@ def get_message_target_column_imbalance(
 
 
 def find_target_column_imbalance(df: pd.DataFrame, target_column: str) -> None:
+    """Find if there is any class imbalance in the dataset for classification.
+
+    param df: The dataframe to be analyzed.
+    type df: pandas.core.frame.DataFrame
+    param target_column: The name of the target column.
+    type target_column: str
+    return: None
+    """
     print(get_message_target_column_imbalance(df, target_column))
 
 
 def get_jupyter_nb_code_to_find_target_column_imbalance() -> Tuple[str, str]:
+    """Get jupyter notebook code to find target column imbalance.
+
+    return: The markdown and code for jupyter notebook.
+    rtype: tuple[str, str]
+    """
     markdown = (
         "### Find if there is any class imbalance in the "
         + "dataset for classification scenarios."
