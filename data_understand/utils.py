@@ -1,3 +1,5 @@
+"""Utilities module for helper functions."""
+
 import timeit
 from typing import Optional
 
@@ -8,7 +10,23 @@ SEPARATOR_LENGTH = 120
 
 
 def measure_time(compute_func):
+    """Measure the time taken by a function to execute via a decorator.
+
+    :param compute_func: Function to be decorated
+    :type compute_func: function
+    :return: Decorated function
+    :rtype: function
+    """
     def compute_wrapper(*args, **kwargs):
+        """Print the time taken by a function to execute and return result.
+
+        :param args: Arguments to be passed to the function
+        :type args: list
+        :param kwargs: Keyword arguments to be passed to the function
+        :type kwargs: dict
+        :return: Result of the function
+        :rtype: object
+        """
         print(get_separator(SEPARATOR_LENGTH))
         start_time = timeit.default_timer()
         result = compute_func(*args, **kwargs)
@@ -22,10 +40,28 @@ def measure_time(compute_func):
 
 
 def get_separator(max_len: int) -> str:
+    """
+    Return a separator string of length max_len.
+
+    :param max_len: Length of the separator string
+    :type max_len: int
+    :return: Separator string
+    :rtype: str
+    """
     return "=" * max_len
 
 
 def get_ml_task_type(df: pd.DataFrame, target_column: str) -> str:
+    """
+    Return the machine learning task type based on the target column.
+
+    :param df: Dataframe
+    :type df: pd.DataFrame
+    :param target_column: Name of the target column
+    :type target_column: str
+    :return: Machine learning task type
+    :rtype: str
+    """
     target_column_array = df[target_column].values
     unique_array, element_counts = np.unique(
         target_column_array, return_counts=True
@@ -41,6 +77,20 @@ def construct_image_name(
     index: Optional[int] = None,
     extension: Optional[str] = ".png",
 ):
+    """
+    Construct the image name and return it.
+
+    :param image_name: Name of the image
+    :type image_name: str
+    :param current_execution_uuid: Current execution uuid
+    :type current_execution_uuid: str
+    :param index: Index of the image
+    :type index: int
+    :param extension: Extension of the image
+    :type extension: str
+    :return: Constructed image name
+    :rtype: str
+    """
     if index is not None:
         return (
             image_name

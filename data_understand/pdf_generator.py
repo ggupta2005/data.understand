@@ -1,3 +1,5 @@
+"""Module to generate PDF report."""
+
 import os
 import uuid
 from typing import Any, List, Tuple

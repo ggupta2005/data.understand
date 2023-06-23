@@ -1,3 +1,5 @@
+"""Module to generate jupyter notebook."""
+
 from typing import Any
 
 import nbformat
@@ -38,6 +40,13 @@ from data_understand.value_distributions import (
 
 @measure_time
 def generate_jupyter_notebook(args: Any) -> None:
+    """Generate a jupyter notebook from user parameters.
+
+    :param args: The user parameters.
+    :type args: Any
+    :return: None
+    :rtype: None
+    """
     print("Generating jupyter notebook for the dataset in " + args.file_name)
     nb = v4.new_notebook()
     nb.metadata["title"] = "Understanding the data in " + args.file_name
