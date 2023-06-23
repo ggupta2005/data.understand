@@ -1,3 +1,5 @@
+"""Setup file for data.understand."""
+
 import setuptools
 
 with open("data_understand/version.py") as f:

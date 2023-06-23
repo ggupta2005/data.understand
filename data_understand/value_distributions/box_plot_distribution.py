@@ -1,3 +1,5 @@
+"""Module for computing box plot distributions."""
+
 from typing import List, Tuple
 
 import matplotlib.pyplot as plt
@@ -12,6 +14,18 @@ from data_understand.value_distributions.distribution_utils import \
 def save_box_plot_distributions(
     df: pd.DataFrame, current_execution_uuid: str
 ) -> List[str]:
+    """Save box plot distributions.
+
+    These are box plots of numerical features grouped by categories
+    in categorical features.
+
+    :param df: The dataframe to be analyzed.
+    :type df: pd.DataFrame
+    :param current_execution_uuid: The current execution uuid.
+    :type current_execution_uuid: str
+    :return: A list of saved image names.
+    :rtype: List[str]
+    """
     index = 0
     (
         numerical_feature_list,
@@ -38,6 +52,16 @@ def save_box_plot_distributions(
 
 
 def generate_box_plot_distributions(df: pd.DataFrame) -> None:
+    """Generate box plot distributions.
+
+    These are box plots of numerical features grouped by categories
+    in categorical features.
+
+    :param df: The dataframe to be analyzed.
+    :type df: pd.DataFrame
+    :return: None
+    :rtype: None
+    """
     (
         numerical_feature_list,
         categorical_feature_list,
@@ -54,6 +78,11 @@ def generate_box_plot_distributions(df: pd.DataFrame) -> None:
 def get_jupyter_nb_code_to_generate_box_plot_distributions() -> (
     Tuple[str, str]
 ):
+    """Get jupyter notebook code to generate box plot distributions.
+
+    :return: A tuple of markdown and code.
+    :rtype: Tuple[str, str]
+    """
     markdown = (
         "### Generate box plot distributions between "
         + "categories in catergorical and numerical features"

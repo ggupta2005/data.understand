@@ -1,3 +1,5 @@
+"""Main entry point of data.understand."""
+
 import argparse
 import warnings
 
@@ -9,7 +11,8 @@ from data_understand.utils import measure_time
 
 
 @measure_time
-def parse_args():
+def parse_args() -> None:
+    """Parse input arguments provided by the user."""
     # Create Argument Parser
     parser = argparse.ArgumentParser(description="data.understand CLI")
 
@@ -46,6 +49,7 @@ def parse_args():
 
 @measure_time
 def main():
+    """Generate data.understand artifacts based on user inputs."""
     warnings.filterwarnings("ignore")
     args = parse_args()
     validate_input_parameters(args)

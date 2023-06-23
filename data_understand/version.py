@@ -1,3 +1,5 @@
+"""Version file for data.understand."""
+
 name = "data_understand"
 _major = "0"
 _minor = "0"

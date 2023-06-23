@@ -1,3 +1,5 @@
+"""This module maintains the messages displayed to the user."""
+
 from data_understand.constants import URLS
 
 MAIN_MESSAGE = (

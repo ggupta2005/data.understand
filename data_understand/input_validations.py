@@ -1,3 +1,5 @@
+"""Module for validating the user input parameters."""
+
 import os
 from typing import Any
 
@@ -6,6 +8,23 @@ from raiutils.exceptions import UserErrorException
 
 
 def validate_input_parameters(args: Any) -> None:
+    """Validate the input parameters.
+
+    The function validates the input parameters and raises an exception if
+    the input parameters are not valid. The function validates the following
+    parameters:
+
+    1. The file name is not None.
+    2. The target column name is not None.
+    3. The file name is a CSV file.
+    4. The file name exists.
+    5. Able to read the file as a pandas DataFrame.
+    6. The target column name exists in the dataset.
+
+    param args: The input parameters.
+    type args: Any
+    return: None
+    """
     if args.file_name is None:
         raise UserErrorException(
             "A valid file name {0} is required. "
