@@ -1,3 +1,6 @@
+
+"""Module for computing value distributions."""
+
 from .box_plot_distribution import (
     generate_box_plot_distributions,
     get_jupyter_nb_code_to_generate_box_plot_distributions,

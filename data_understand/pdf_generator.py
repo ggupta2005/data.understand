@@ -28,14 +28,37 @@ from data_understand.value_distributions import (
 
 
 class PDFReportGenerator(FPDF):
-    def __init__(self, file_name, target_column_name):
+    """This class is responsible for generating a PDF report for given dataset.
+
+    The report contains the following information:-
+    1. Dataset characteristics
+    2. Visualize distributions of the dataset
+    3. Feature correlations between numerical features
+    4. Class Imbalance
+    """
+
+    def __init__(self, file_name, target_column_name) -> None:
+        """Initialize the PDFReportGenerator class.
+
+        :param file_name: The name of the .csv file to be analyzed.
+        :type file_name: str
+        :param target_column_name: The name of the target column.
+        :type target_column_name: str
+        :return: None
+        :rtype: None
+        """
         super(PDFReportGenerator, self).__init__()
         self._file_name = file_name
         self._target_column_name = target_column_name
         self._dataframe = load_dataset_as_dataframe(file_name)
         self._current_execution_uuid = str(uuid.uuid4())
 
-    def header(self):
+    def header(self) -> None:
+        """Add watermark in each page of the PDF report.
+
+        :return: None
+        :rtype: None
+        """
         # Add watermark in the header
         self.set_font("Arial", "B", 50)
         self.set_text_color(128, 128, 128)
@@ -45,24 +68,53 @@ class PDFReportGenerator(FPDF):
         self.set_text_color(0, 0, 0)
         self.set_font("Arial", "", 12)
 
-    def footer(self):
+    def footer(self) -> None:
+        """Add page number in each page of the PDF report.
+
+        :return: None
+        :rtype: None
+        """
         self.set_y(-15)  # Position the footer 15 units from the bottom
         self.set_font("Arial", size=11)  # Set font and style for the footer
         self.cell(
             0, 10, f"{self.page_no()}", 0, 0, "C"
         )  # Print the page number centered
 
-    def _add_heading(self, message: str):
+    def _add_heading(self, message: str) -> None:
+        """Add a heading to the PDF report.
+
+        :param message: The message to be added as a heading.
+        :type message: str
+        :return: None
+        :rtype: None
+        """
         self.set_font("Arial", size=20)
         self.cell(200, 10, message, align="C")
         self.ln()
 
-    def _add_sub_heading(self, message: str):
+    def _add_sub_heading(self, message: str) -> None:
+        """Add a sub heading to the PDF report.
+
+        :param message: The message to be added as a sub heading.
+        :type message: str
+        :return: None
+        :rtype: None
+        """
         self.set_font("Arial", size=15)
         self.cell(None, None, message)
         self.ln()
 
-    def _add_text(self, message: str, multi_line=False):
+    def _add_text(self, message: str, multi_line=False) -> None:
+        """Add a text to the PDF report.
+
+        :param message: The message to be added as a text.
+        :type message: str
+        :param multi_line: A boolean flag indicating whether the message is a
+            multi line message or not.
+        :type multi_line: bool
+        :return: None
+        :rtype: None
+        """
         self.set_font("Arial", size=11)
         if multi_line:
             self.multi_cell(0, 10, message, markdown=True)
@@ -70,7 +122,18 @@ class PDFReportGenerator(FPDF):
             self.cell(0, 10, message)
         self.ln()
 
-    def _add_table(self, message: str, dataset_as_tuples: Tuple[Tuple[Any]]):
+    def _add_table(
+            self, message: str,
+            dataset_as_tuples: Tuple[Tuple[Any]]) -> None:
+        """Add a table to the PDF report.
+
+        :param message: The message to be added before the table.
+        :type message: str
+        :param dataset_as_tuples: The dataset to be added as a table.
+        :type dataset_as_tuples: Tuple[Tuple[Any]]
+        :return: None
+        :rtype: None
+        """
         self._add_text(message)
         with self.table(text_align="CENTER") as table:
             for data_row in dataset_as_tuples:
@@ -79,7 +142,12 @@ class PDFReportGenerator(FPDF):
                     row.cell(datum)
         self.ln()
 
-    def add_title_and_description_page(self):
+    def add_title_and_description_page(self) -> None:
+        """Add the title and description page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_heading(
             message="Understanding the data in " + self._file_name
@@ -88,8 +156,12 @@ class PDFReportGenerator(FPDF):
             message=MAIN_MESSAGE.format("PDF report"), multi_line=True
         )
 
-    def add_index_page(self):
-        # Add an index to the document
+    def add_index_page(self) -> None:
+        """Add the index page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_sub_heading(message="Index")
         self._add_text("Chapter 1 - Dataset Charateristics")
@@ -99,8 +171,12 @@ class PDFReportGenerator(FPDF):
         )
         self._add_text("Chapter 4 - Class Imbalance")
 
-    def add_data_characteristics_page(self):
-        # Add the dataset characteristics page
+    def add_data_characteristics_page(self) -> None:
+        """Add the dataset characteristics page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_heading("Chapter 1 - Dataset Charateristics")
 
@@ -134,7 +210,12 @@ class PDFReportGenerator(FPDF):
             dataset_snapshot_table,
         )
 
-    def add_data_visualization_pages(self):
+    def add_data_visualization_pages(self) -> None:
+        """Add the data visualization pages to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_heading("Chapter 2 - Visualize distributions of the dataset")
         self._add_text(DATA_VISUALIZATION_MESSAGE, multi_line=True)
@@ -142,7 +223,12 @@ class PDFReportGenerator(FPDF):
         self._add_value_distribution_page()
         self._add_box_plot_page()
 
-    def _add_cat_frequency_page(self):
+    def _add_cat_frequency_page(self) -> None:
+        """Add the categorical frequency page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_sub_heading("Categorical feature distribution")
         self._add_text(CATEGORICAL_DISTRIBUTION_MESSAGE, multi_line=True)
@@ -161,6 +247,15 @@ class PDFReportGenerator(FPDF):
     def _add_multiple_images(
         self, saved_file_name_list: List[str], title: str
     ) -> None:
+        """Add multiple images to the PDF report.
+
+        :param saved_file_name_list: The list of saved file names.
+        :type saved_file_name_list: List[str]
+        :param title: The title of the image.
+        :type title: str
+        :return: None
+        :rtype: None
+        """
         index = 0
         page_index = 0
         while index < len(saved_file_name_list):
@@ -191,7 +286,12 @@ class PDFReportGenerator(FPDF):
             page_index += 1
             index += 1
 
-    def _add_value_distribution_page(self):
+    def _add_value_distribution_page(self) -> None:
+        """Add the numerical value distribution page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_sub_heading("Numerical value distribution")
         self._add_text(NUMERICAL_VALUE_DISTRIBUTION_MESSAGE, multi_line=True)
@@ -207,7 +307,12 @@ class PDFReportGenerator(FPDF):
         if len(saved_file_name_list) == 0:
             self._add_text("No numerical features exists in the dataset.")
 
-    def _add_box_plot_page(self):
+    def _add_box_plot_page(self) -> None:
+        """Add the box plot page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_sub_heading("Box plot distribution")
         self._add_text(BOX_PLOT_DISTRIBUTION_MESSAGE, multi_line=True)
@@ -223,10 +328,20 @@ class PDFReportGenerator(FPDF):
         if len(saved_file_name_list) == 0:
             self._add_text("No categorical features exists in the dataset.")
 
-    def add_feature_correlation_page(self):
+    def add_feature_correlation_page(self) -> None:
+        """Add the feature correlation page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self._add_feature_correlation_page()
 
-    def _add_feature_correlation_page(self):
+    def _add_feature_correlation_page(self) -> None:
+        """Add the feature correlation page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_heading(
             "Chapter 3 - Feature correlations between numerical features"
@@ -265,8 +380,12 @@ class PDFReportGenerator(FPDF):
         )
         os.remove(saved_file_name)
 
-    def add_class_imbalance_page(self):
-        # Add a new page
+    def add_class_imbalance_page(self) -> None:
+        """Add the class imbalance page to the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.add_page()
         self._add_heading("Chapter 4 - Class Imbalance")
         self._add_text(CLASS_IMBALANCE_MESSAGE, multi_line=True)
@@ -277,12 +396,24 @@ class PDFReportGenerator(FPDF):
             multi_line=True,
         )
 
-    def save_pdf(self):
+    def save_pdf(self) -> None:
+        """Save the PDF report.
+
+        return: None
+        rtype: None
+        """
         self.output(self._file_name + ".pdf")
 
 
 @measure_time
 def generate_pdf(args: Any) -> None:
+    """Generate the PDF report for the dataset.
+
+    :param args: The user parameters.
+    :type args: Any
+    :return: None
+    :rtype: None
+    """
     print("Generating PDF report for the dataset in " + args.file_name)
     pdf_report_generator = PDFReportGenerator(
         args.file_name, args.target_column
