@@ -3,6 +3,7 @@ from argparse import Namespace
 
 import pandas as pd
 import pytest
+from raiutils.exceptions import UserErrorException
 
 from data_understand.input_validations import validate_input_parameters
 
@@ -29,7 +30,7 @@ class TestInputValidations:
     def test_missing_file_name(self, args):
         args.file_name = None
         with pytest.raises(
-            Exception,
+            UserErrorException,
             match="A valid file name None is required. "
             "Please provide a valid file path.",
         ):
@@ -38,21 +39,22 @@ class TestInputValidations:
     def test_missing_target_column(self, args):
         args.target_column = None
         with pytest.raises(
-            Exception, match="A valid target column name is required."
+            UserErrorException, match="A valid target column name is required."
         ):
             validate_input_parameters(args)
 
     def test_nonexistent_file_name(self, args):
         args.file_name = "nonexistent_file.csv"
         with pytest.raises(
-            Exception, match="The file nonexistent_file.csv doesn't exists."
+            UserErrorException,
+            match="The file nonexistent_file.csv doesn't exists.",
         ):
             validate_input_parameters(args)
 
     def test_non_csv_file_name(self, args):
         args.file_name = "test_file.txt"
         with pytest.raises(
-            Exception,
+            UserErrorException,
             match="The file test_file.txt is not a CSV file. "
             "Please provide a CSV file.",
         ):
@@ -64,7 +66,7 @@ class TestInputValidations:
             f.write("col1,col2,col3\n1,2,3\n4,5\n7,8,9,10")
 
         with pytest.raises(
-            Exception,
+            UserErrorException,
             match=f"Unable to read CSV file {args.file_name} as "
             "a pandas DataFrame",
         ):
@@ -79,7 +81,7 @@ class TestInputValidations:
         test_df.to_csv(args.file_name, index=False)
 
         with pytest.raises(
-            Exception,
+            UserErrorException,
             match="The target column name target doesn't exist in dataset.",
         ):
             validate_input_parameters(args)
