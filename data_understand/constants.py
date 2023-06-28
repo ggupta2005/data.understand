@@ -9,4 +9,6 @@ URLS = {
         + "construct/sampling-splitting/imbalanced-data",
     "Pearson correlation coefficient":
         "https://en.wikipedia.org/wiki/Pearson_correlation_coefficient",
+    "data.understand":
+        "https://github.com/ggupta2005/data.understand"
 }

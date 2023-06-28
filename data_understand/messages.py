@@ -115,3 +115,8 @@ CLASS_IMBALANCE_MESSAGE = (
     "to address the issue of [class imbalance]"
     "({0}) in your dataset.".format(URLS["class imbalance"])
 )
+
+REFERENCES_MESSAGE = (
+    "You can visit the following links for further exploration:- \n"
+    "- [data.understand]({0})".format(URLS["data.understand"])
+)

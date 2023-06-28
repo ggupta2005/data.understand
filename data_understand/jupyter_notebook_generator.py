@@ -28,7 +28,8 @@ from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       FEATURE_CORRELATION_GRAPH_MESSAGE,
                                       FEATURE_CORRELATION_MESSAGE,
                                       MAIN_MESSAGE,
-                                      NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
+                                      NUMERICAL_VALUE_DISTRIBUTION_MESSAGE,
+                                      REFERENCES_MESSAGE)
 from data_understand.target_characteristics import \
     get_jupyter_nb_code_to_get_target
 from data_understand.utils import measure_time
@@ -181,6 +182,7 @@ def generate_jupyter_notebook(args: Any) -> None:
         ),
         v4.new_markdown_cell(source=class_imbalance_markdown),
         v4.new_code_cell(source=class_imbalance_code),
+        v4.new_markdown_cell(source="## References\n" + REFERENCES_MESSAGE)
     ]
 
     with open(args.file_name + ".ipynb", "w") as f:

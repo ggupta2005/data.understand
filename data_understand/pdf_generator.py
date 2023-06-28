@@ -20,7 +20,8 @@ from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       FEATURE_CORRELATION_GRAPH_MESSAGE,
                                       FEATURE_CORRELATION_MESSAGE,
                                       MAIN_MESSAGE,
-                                      NUMERICAL_VALUE_DISTRIBUTION_MESSAGE)
+                                      NUMERICAL_VALUE_DISTRIBUTION_MESSAGE,
+                                      REFERENCES_MESSAGE)
 from data_understand.utils import get_ml_task_type, measure_time
 from data_understand.value_distributions import (
     save_box_plot_distributions, save_cat_frequency_distributions,
@@ -396,6 +397,16 @@ class PDFReportGenerator(FPDF):
             multi_line=True,
         )
 
+    def add_references_page(self) -> None:
+        """Add the reference page to the PDF report.
+
+        return: None
+        rtype: None
+        """
+        self.add_page()
+        self._add_heading("References")
+        self._add_text(REFERENCES_MESSAGE, multi_line=True)
+
     def save_pdf(self) -> None:
         """Save the PDF report.
 
@@ -424,6 +435,7 @@ def generate_pdf(args: Any) -> None:
     pdf_report_generator.add_data_visualization_pages()
     pdf_report_generator.add_feature_correlation_page()
     pdf_report_generator.add_class_imbalance_page()
+    pdf_report_generator.add_references_page()
     pdf_report_generator.save_pdf()
     print(
         "Successfully generated PDF report for the dataset in "
