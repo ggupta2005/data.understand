@@ -1,4 +1,5 @@
 # data.understand
+[!PyPI data-understand](https://img.shields.io/pypi/v/data-understand?label=PyPI%20data-understand)
 [![Downloads](https://static.pepy.tech/badge/data-understand)](https://pepy.tech/project/data-understand)
 [![Run Python E2E Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml)
 [![Run Python E2E Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml)
