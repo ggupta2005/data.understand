@@ -1,4 +1,4 @@
-import subprocess
+import uuid
 
 import pandas as pd
 import pytest
@@ -16,7 +16,11 @@ class TestE2EClassification(TestE2ECommon):
     @pytest.mark.parametrize(
         "dataset_name", ["iris", "titanic", "cancer", "wine", "adult"]
     )
-    def test_e2e_classification(self, dataset_name):
+    @pytest.mark.parametrize("generate_jupyter_notebook", [True, False])
+    @pytest.mark.parametrize("generate_pdf", [True, False])
+    def test_e2e_classification(
+        self, dataset_name, generate_jupyter_notebook, generate_pdf
+    ):
         dataset_to_fixture_dict = {
             "iris": create_iris_data,
             "cancer": create_cancer_data,
@@ -28,26 +32,16 @@ class TestE2EClassification(TestE2ECommon):
 
         if dataset_name == "adult":
             X_train, _, y_train, _, _ = dataset()
+            feature_names = list(X_train.columns)
         else:
             X_train, _, y_train, _, feature_names, _ = dataset()
         if not isinstance(X_train, pd.DataFrame):
             X_train = pd.DataFrame(data=X_train, columns=feature_names)
 
         X_train["target"] = y_train
-        X_train.to_csv(dataset_name + ".csv", index=False)
-        csv_file_name = dataset_name + ".csv"
+        csv_file_name = dataset_name + str(uuid.uuid4()) + ".csv"
+        X_train.to_csv(csv_file_name, index=False)
 
-        command = "data_understand -f {0} -t target -p -j".format(
-            csv_file_name
+        self.execute_and_verify_data_understand(
+            csv_file_name, generate_jupyter_notebook, generate_pdf
         )
-        result = subprocess.run(
-            command, shell=True, capture_output=True, text=True
-        )
-        assert result.returncode == 0
-
-        self.verify_if_files_generated(csv_file_name)
-        self.verify_jupyter_notebook(csv_file_name + ".ipynb")
-        self.verify_pdf_file(csv_file_name + ".pdf")
-
-        # Clean up the temporary files
-        self.cleanup_generated_files(csv_file_name)

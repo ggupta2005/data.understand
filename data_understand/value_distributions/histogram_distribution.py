@@ -1,11 +1,24 @@
-from typing import Any, Tuple
+"""Module for computing histogram distributions."""
+
+from typing import Any, List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from data_understand.utils import construct_image_name
+
 
 def _get_histogram_distribution(data: np.ndarray) -> Tuple[Any, Any]:
+    """
+    Generate a histogram distribution for the given data.
+
+    param data: The data to generate the histogram distribution for.
+    type data: np.ndarray
+    return: The line plot and bar plot values for the
+            histogram distribution.
+    rtype: Tuple[Any, Any]
+    """
     np.random.seed(0)
 
     # Create a histogram of the data
@@ -30,6 +43,14 @@ def _get_histogram_distribution(data: np.ndarray) -> Tuple[Any, Any]:
 
 
 def generate_histogram_distributions(df: pd.DataFrame) -> None:
+    """
+    Generate histogram distributions for the given dataframe.
+
+    param df: The dataframe to generate the histogram distributions for.
+    type df: pd.DataFrame
+    return: None
+    rtype: None
+    """
     numeric_features = df.select_dtypes(include="number").columns.tolist()
     for feature in numeric_features:
         x, plot = _get_histogram_distribution(df[feature].values)
@@ -47,9 +68,23 @@ def generate_histogram_distributions(df: pd.DataFrame) -> None:
         plt.show()
 
 
-def save_histogram_distributions(df: pd.DataFrame) -> None:
+def save_histogram_distributions(
+    df: pd.DataFrame, current_execution_uuid: str
+) -> List[str]:
+    """
+    Generate histogram distributions for the given dataframe and save them.
+
+    param df: The dataframe to generate the histogram distributions for.
+    type df: pd.DataFrame
+    param current_execution_uuid: The current execution uuid.
+    type current_execution_uuid: str
+    return: The list of saved image names.
+    rtype: List[str]
+    """
     numeric_features = df.select_dtypes(include="number").columns.tolist()
     index = 0
+    saved_image_name_list = []
+
     for feature in numeric_features:
         x, plot = _get_histogram_distribution(df[feature].values)
         plt.plot(x, plot, color="red", linewidth=2, label="Gaussian PDF")
@@ -61,15 +96,26 @@ def save_histogram_distributions(df: pd.DataFrame) -> None:
 
         # Set the title
         plt.title("Distribution Plot")
-
-        plt.savefig("value_distribution_{0}.png".format(index))
+        saved_image_name = construct_image_name(
+            "value_distribution", current_execution_uuid, index
+        )
+        plt.savefig(saved_image_name)
+        saved_image_name_list.append(saved_image_name)
         index += 1
         plt.clf()
+
+    return saved_image_name_list
 
 
 def get_jupyter_nb_code_to_generate_histogram_distributions() -> (
     Tuple[str, str]
 ):
+    """
+    Get the jupyter notebook code to generate histogram distributions.
+
+    return: The markdown and code for the jupyter notebook.
+    rtype: Tuple[str, str]
+    """
     markdown = "### Generate histogram distribution for continous features"
     code = (
         "from data_understand.value_distributions import "

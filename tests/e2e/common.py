@@ -64,12 +64,61 @@ class TestE2ECommon:
             errors == []
         ), "There shouldn't be any errors in the executed jupyter notebook"
 
-    def verify_if_files_generated(self, csv_file_name):
+    def verify_if_files_generated(
+        self, csv_file_name, generate_jupyter_notebook, generate_pdf
+    ):
         assert os.path.exists(csv_file_name)
-        assert os.path.exists(csv_file_name + ".pdf")
-        assert os.path.exists(csv_file_name + ".ipynb")
+        if generate_pdf:
+            assert os.path.exists(csv_file_name + ".pdf")
+        else:
+            assert not os.path.exists(csv_file_name + ".pdf")
+        if generate_jupyter_notebook:
+            assert os.path.exists(csv_file_name + ".ipynb")
+        else:
+            assert not os.path.exists(csv_file_name + ".ipynb")
 
-    def cleanup_generated_files(self, csv_file_name):
+    def cleanup_generated_files(
+        self, csv_file_name, generate_jupyter_notebook, generate_pdf
+    ):
         os.remove(csv_file_name)
-        os.remove(csv_file_name + ".pdf")
-        os.remove(csv_file_name + ".ipynb")
+        if generate_pdf:
+            os.remove(csv_file_name + ".pdf")
+        if generate_jupyter_notebook:
+            os.remove(csv_file_name + ".ipynb")
+
+    def execute_and_verify_data_understand(
+        self, csv_file_name, generate_jupyter_notebook, generate_pdf
+    ):
+        if generate_jupyter_notebook and generate_pdf:
+            command = "data_understand -f {0} -t target -p -j".format(
+                csv_file_name
+            )
+        elif generate_pdf:
+            command = "data_understand -f {0} -t target -p".format(
+                csv_file_name
+            )
+        elif generate_jupyter_notebook:
+            command = "data_understand -f {0} -t target -j".format(
+                csv_file_name
+            )
+        else:
+            command = "data_understand -f {0} -t target".format(csv_file_name)
+        result = subprocess.run(
+            command, shell=True, capture_output=True, text=True
+        )
+        print(result.stdout)
+        print(result.stderr)
+        assert result.returncode == 0
+
+        self.verify_if_files_generated(
+            csv_file_name, generate_jupyter_notebook, generate_pdf
+        )
+        if generate_jupyter_notebook:
+            self.verify_jupyter_notebook(csv_file_name + ".ipynb")
+        if generate_pdf:
+            self.verify_pdf_file(csv_file_name + ".pdf")
+
+        # Clean up the temporary files
+        self.cleanup_generated_files(
+            csv_file_name, generate_jupyter_notebook, generate_pdf
+        )

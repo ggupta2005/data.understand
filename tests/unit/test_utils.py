@@ -1,6 +1,7 @@
 import pandas as pd
 
-from data_understand.utils import get_ml_task_type, get_separator, measure_time
+from data_understand.utils import (construct_image_name, get_ml_task_type,
+                                   get_separator, measure_time)
 
 
 class TestUtils:
@@ -74,3 +75,18 @@ class TestUtils:
         }
         regression_df = pd.DataFrame(regression_data)
         assert get_ml_task_type(regression_df, "Column2") == "Regression"
+
+    def test_construct_image_name(self):
+        image_name_with_index = construct_image_name("some", "other", 1)
+        assert isinstance(image_name_with_index, str)
+        assert "some" in image_name_with_index
+        assert "other" in image_name_with_index
+        assert "1" in image_name_with_index
+        assert ".png" in image_name_with_index
+
+        image_name_without_index = construct_image_name("some", "other")
+        assert isinstance(image_name_without_index, str)
+        assert "some" in image_name_without_index
+        assert "other" in image_name_without_index
+        assert "1" not in image_name_without_index
+        assert ".png" in image_name_without_index
