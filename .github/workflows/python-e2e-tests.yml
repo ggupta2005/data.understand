@@ -38,6 +38,10 @@ jobs:
         run: |
           pip list
 
+      - name: Dump all available kernels
+        run: |
+            jupyter kernelspec list
+
       - name: Run tests
         run: |
           pytest -m "e2e_tests" --durations=10 -n auto
