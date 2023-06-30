@@ -1,12 +1,12 @@
 # data.understand
-[!PyPI data-understand](https://img.shields.io/pypi/v/data-understand?label=PyPI%20data-understand)
+![PyPI data-understand](https://img.shields.io/pypi/v/data-understand)
 [![Downloads](https://static.pepy.tech/badge/data-understand)](https://pepy.tech/project/data-understand)
 [![Run Python E2E Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml)
-[![Run Python E2E Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml)
+[![Run Python Unit Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-unit-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-unit-tests.yml)
 
-As data scientists and machine learning engineers, we are often required to execute various data science tasks like loading up the dataset into a pandas dataframe, inspecting the columns/rows in the dataset, visualizing the distribution of values, finding feature correlations and determining if there are imbalances in the dataset. Often these tasks are repetitive and involves creating multiple jupyter notebooks, making sure we manage these jupyter notebooks separately with different handles to the location of input dataset. How about you have one tool which could take the directory location of your dataset and generate the boring logic for you to execute and learn the same insights about your dataset. All you need to do is to install this tool in your local python environment and then execute the tool from a command line.
+As data scientists and machine learning engineers, we are often required to execute various data science tasks like loading up the dataset into a pandas dataframe, inspecting the columns/rows in the dataset, visualizing the distribution of values, finding feature correlations and determining if there are any sort of imbalances in the dataset. Often these tasks are repetitive and involve creating multiple jupyter notebooks and we have to manage these jupyter notebooks separately with different handles to the location of input dataset. How about you have one tool which could take the directory location of your dataset and generate the boring aforementioned logic for you to execute and learn the same insights about your dataset. All you need to do is to install this tool in your local python environment and then execute the tool from a command line.
 
-You can install the package `data_understand` from pypi using the following command:-
+You can install the package `data-understand` from pypi using the following command:-
 
 ```
 pip install data-understand
@@ -36,7 +36,7 @@ options:
 In order to generate both PDF report and jupyter notebook you can execute the following CLI command:-
 
 ```
-data_understand -f adult_dataset.csv -t income -p -j
+data_understand --file_name adult_dataset.csv --target_column income --generate_pdf --generate_jupyter_notebook
 ========================================================================================================================
 ========================================================================================================================
 The parsed arguments are:- 
@@ -62,4 +62,4 @@ Time taken: 0.0 min 7.485209299999951 sec
 ========================================================================================================================
 ```
 
-This would generate the jupyter notebook and PDF report in the same directory location as your dataset.
+This would generate the jupyter notebook and PDF report in the same directory location as your dataset. You can execute the cells in the jupyter notebook to generate various insights and graphs on the fly or you can read through the PDF report to learn about various aspects of your dataset.
