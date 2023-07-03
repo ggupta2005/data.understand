@@ -17,6 +17,7 @@ def measure_time(compute_func):
     :return: Decorated function
     :rtype: function
     """
+
     def compute_wrapper(*args, **kwargs):
         """Print the time taken by a function to execute and return result.
 

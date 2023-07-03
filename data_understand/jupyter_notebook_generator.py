@@ -182,7 +182,7 @@ def generate_jupyter_notebook(args: Any) -> None:
         ),
         v4.new_markdown_cell(source=class_imbalance_markdown),
         v4.new_code_cell(source=class_imbalance_code),
-        v4.new_markdown_cell(source="## References\n" + REFERENCES_MESSAGE)
+        v4.new_markdown_cell(source="## References\n" + REFERENCES_MESSAGE),
     ]
 
     with open(args.file_name + ".ipynb", "w") as f:
