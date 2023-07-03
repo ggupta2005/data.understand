@@ -38,9 +38,12 @@ jobs:
         run: |
           pip list
 
-      - name: Dump all available kernels
+      - name: Set python3 as a jupyter kernel
         run: |
             python3 -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Dump all available jupyter kernels
+        run: |
             jupyter kernelspec list
 
       - name: Run tests
