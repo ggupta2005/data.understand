@@ -1,4 +1,3 @@
-
 """Module for computing value distributions."""
 
 from .box_plot_distribution import (

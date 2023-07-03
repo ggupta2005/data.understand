@@ -1,9 +1,9 @@
 import os
 import subprocess
-import tempfile
 
 import nbformat
 import PyPDF2
+from nbclient import NotebookClient
 
 
 class TestE2ECommon:
@@ -34,37 +34,6 @@ class TestE2ECommon:
 
     def _run_and_verify_jupyter_notebook_output_cells(self, filepath):
         """Execute a notebook via nbconvert and collect output."""
-        # with tempfile.NamedTemporaryFile(suffix=".ipynb") as fout:
-        #     args = [
-        #         "jupyter",
-        #         "nbconvert",
-        #         "--to",
-        #         "notebook",
-        #         "--execute",
-        #         "-y",
-        #         "--no-prompt",
-        #         "--output",
-        #         fout.name,
-        #         filepath,
-        #     ]
-        #     subprocess.check_call(args)
-
-        #     fout.seek(0)
-        #     nb = nbformat.read(fout, nbformat.current_nbformat)
-
-        # errors = [
-        #     output
-        #     for cell in nb.cells
-        #     if "outputs" in cell
-        #     for output in cell["outputs"]
-        #     if output.output_type == "error"
-        # ]
-
-        # assert (
-        #     errors == []
-        # ), "There shouldn't be any errors in the executed jupyter notebook"
-
-        from nbclient import NotebookClient
         notebook = nbformat.read(filepath, as_version=4)
         client = NotebookClient(nb=notebook)
         client.execute()
@@ -72,9 +41,10 @@ class TestE2ECommon:
         for cell in client.nb.cells:
             if cell.get("outputs"):
                 for output in cell["outputs"]:
-                    if output.get("output_type") == "error":
-                        # Handle the error
-                        print("Error found:", output["ename"], output["evalue"])
+                    assert (
+                        output.get("output_type") != "error"
+                    ), "There shouldn't be any errors in the executed " +\
+                        "jupyter notebook"
 
     def verify_if_files_generated(
         self, csv_file_name, generate_jupyter_notebook, generate_pdf
@@ -118,8 +88,6 @@ class TestE2ECommon:
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True
         )
-        print(result.stdout)
-        print(result.stderr)
         assert result.returncode == 0
 
         self.verify_if_files_generated(

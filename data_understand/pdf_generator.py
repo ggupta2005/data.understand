@@ -124,8 +124,8 @@ class PDFReportGenerator(FPDF):
         self.ln()
 
     def _add_table(
-            self, message: str,
-            dataset_as_tuples: Tuple[Tuple[Any]]) -> None:
+        self, message: str, dataset_as_tuples: Tuple[Tuple[Any]]
+    ) -> None:
         """Add a table to the PDF report.
 
         :param message: The message to be added before the table.
