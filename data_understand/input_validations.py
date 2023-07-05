@@ -29,9 +29,6 @@ def validate_input_parameters(args: Any) -> None:
     file_name = args.file_name
     target_column = args.target_column
 
-    if not isinstance(file_name, str):
-        raise UserErrorException("The file_name given is not string")
-
     if file_name is None:
         raise UserErrorException(
             "A valid file name {0} is required. "
