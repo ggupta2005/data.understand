@@ -268,7 +268,7 @@ class PDFReportGenerator(FPDF):
                 self.image(
                     saved_file_name_list[index],
                     Align.L,
-                    y=40 + (page_index // 2) * 90,
+                    y=60 + (page_index // 2) * 90,
                     w=90,
                     h=90,
                     title=title,
@@ -277,7 +277,7 @@ class PDFReportGenerator(FPDF):
                 self.image(
                     saved_file_name_list[index],
                     Align.R,
-                    y=40 + (page_index // 2) * 90,
+                    y=60 + (page_index // 2) * 90,
                     w=90,
                     h=90,
                     title=title,
