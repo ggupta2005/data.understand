@@ -25,38 +25,48 @@ def validate_input_parameters(args: Any) -> None:
     type args: Any
     return: None
     """
-    if args.file_name is None:
+    # Read all parameters
+    file_name = args.file_name
+    target_column = args.target_column
+
+    if not isinstance(file_name, str):
+        raise UserErrorException("The file_name given is not string")
+
+    if file_name is None:
         raise UserErrorException(
             "A valid file name {0} is required. "
             "Please provide a valid file path.".format(args.file_name)
         )
 
-    if args.target_column is None:
+    if target_column is None:
         raise UserErrorException("A valid target column name is required.")
 
-    if not args.file_name.endswith(".csv"):
+    if not isinstance(file_name, str):
+        raise UserErrorException("The file_name given is not string")
+
+    if not file_name.endswith(".csv"):
         raise UserErrorException(
             "The file {} is not a CSV file. "
-            "Please provide a CSV file.".format(args.file_name)
+            "Please provide a CSV file.".format(file_name)
         )
 
-    if not os.path.exists(args.file_name):
+    if not os.path.exists(file_name):
         raise UserErrorException(
-            "The file {} doesn't exists.".format(args.file_name)
+            "The file {} doesn't exists.".format(file_name)
         )
 
     try:
-        df = pd.read_csv(args.file_name)
+        df = pd.read_csv(file_name)
     except Exception:
         raise UserErrorException(
             "Unable to read CSV file {0} as a pandas DataFrame".format(
-                args.file_name
+                file_name
             )
         )
 
-    if args.target_column not in df.columns.tolist():
+    if target_column not in df.columns.tolist():
         raise UserErrorException(
             "The target column name {0} doesn't exist in dataset.".format(
-                args.target_column
+                target_column
             )
         )
