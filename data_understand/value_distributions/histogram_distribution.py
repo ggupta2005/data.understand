@@ -8,6 +8,8 @@ import pandas as pd
 
 from data_understand.utils import construct_image_name
 
+Y_LABEL_DESCRIPTION = "Probability Density Distribution"
+
 
 def _get_histogram_distribution(data: np.ndarray) -> Tuple[Any, Any]:
     """
@@ -58,7 +60,7 @@ def generate_histogram_distributions(df: pd.DataFrame) -> None:
 
         # Add labels and a legend
         plt.xlabel(feature)
-        plt.ylabel("Y axis label")
+        plt.ylabel(Y_LABEL_DESCRIPTION)
         plt.legend()
 
         # Set the title
@@ -91,7 +93,7 @@ def save_histogram_distributions(
 
         # Add labels and a legend
         plt.xlabel(feature)
-        plt.ylabel("Y axis label")
+        plt.ylabel(Y_LABEL_DESCRIPTION)
         plt.legend()
 
         # Set the title
