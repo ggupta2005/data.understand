@@ -27,7 +27,8 @@ MAIN_MESSAGE = (
     "particularly valuable in machine learning tasks, as it "
     "helps to identify strategies for handling class "
     "imbalances and improving the performance of "
-    "classification algorithms."
+    "classification algorithms.\n\nThis version of {0} has "
+    "been generated from `{1}` version of `{2}`."
 )
 
 DATA_CHARATERISTICS_MESSAGE = (

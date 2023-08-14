@@ -18,7 +18,7 @@ class TestUtils:
         assert value == 10
 
     def test_get_ml_task_type(self):
-        classification_data = {
+        multiclass_classification_data = {
             "Column1": [
                 1,
                 2,
@@ -56,7 +56,31 @@ class TestUtils:
                 "A",
                 "C",
                 "C",
+                "E",
+                "E",
                 "A",
+                "C",
+                "C",
+                "A",
+            ],
+        }
+        multiclass_classification_df = pd.DataFrame(
+            multiclass_classification_data
+        )
+        assert (
+            get_ml_task_type(multiclass_classification_df, "Column2")
+            == "Multiclass Classification"
+        )
+
+        binary_classification_data = {
+            "Column1": [
+                1,
+                2,
+                3,
+                4,
+                5,
+            ],
+            "Column2": [
                 "A",
                 "A",
                 "C",
@@ -64,9 +88,10 @@ class TestUtils:
                 "A",
             ],
         }
-        classification_df = pd.DataFrame(classification_data)
+        binary_classification_df = pd.DataFrame(binary_classification_data)
         assert (
-            get_ml_task_type(classification_df, "Column2") == "Classification"
+            get_ml_task_type(binary_classification_df, "Column2")
+            == "Binary Classification"
         )
 
         regression_data = {
@@ -74,7 +99,7 @@ class TestUtils:
             "Column2": ["A", "B", "C", "C", "E"],
         }
         regression_df = pd.DataFrame(regression_data)
-        assert get_ml_task_type(regression_df, "Column2") == "Regression"
+        assert get_ml_task_type(regression_df, "Column1") == "Regression"
 
     def test_construct_image_name(self):
         image_name_with_index = construct_image_name("some", "other", 1)

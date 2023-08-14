@@ -5,6 +5,7 @@ from typing import Any
 import nbformat
 from nbformat import v4
 
+import data_understand
 from data_understand.class_imbalance import \
     get_jupyter_nb_code_to_find_target_column_imbalance
 from data_understand.dataset_characteristics import (
@@ -30,8 +31,8 @@ from data_understand.messages import (BOX_PLOT_DISTRIBUTION_MESSAGE,
                                       MAIN_MESSAGE,
                                       NUMERICAL_VALUE_DISTRIBUTION_MESSAGE,
                                       REFERENCES_MESSAGE)
-from data_understand.target_characteristics import \
-    get_jupyter_nb_code_to_get_target
+from data_understand.target_characteristics import (
+    get_jupyter_nb_code_to_get_ml_task_type, get_jupyter_nb_code_to_get_target)
 from data_understand.utils import measure_time
 from data_understand.value_distributions import (
     get_jupyter_nb_code_to_generate_box_plot_distributions,
@@ -60,6 +61,10 @@ def generate_jupyter_notebook(args: Any) -> None:
         target_read_markdown,
         target_read_code,
     ) = get_jupyter_nb_code_to_get_target(args.target_column)
+    (
+        ml_task_type_read_markdown,
+        ml_task_type_read_code,
+    ) = get_jupyter_nb_code_to_get_ml_task_type(args.target_column)
     (
         dataframe_rows_markdown,
         dataframe_rows_code,
@@ -115,7 +120,11 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_markdown_cell(
             source="# Understanding the data in " + args.file_name
         ),
-        v4.new_markdown_cell(source=MAIN_MESSAGE.format("jupyter notebook")),
+        v4.new_markdown_cell(
+            source=MAIN_MESSAGE.format(
+                "jupyter notebook", data_understand.version, "data-understand"
+            )
+        ),
         v4.new_markdown_cell(source="## Read dataset and set target column"),
         v4.new_markdown_cell(source=dataframe_read_markdown),
         v4.new_code_cell(source=dataframe_read_code),
@@ -137,6 +146,8 @@ def generate_jupyter_notebook(args: Any) -> None:
         v4.new_code_cell(source=missing_values_code),
         v4.new_markdown_cell(source=dataframe_head_markdown),
         v4.new_code_cell(source=dataframe_head_code),
+        v4.new_markdown_cell(source=ml_task_type_read_markdown),
+        v4.new_code_cell(source=ml_task_type_read_code),
         v4.new_markdown_cell(
             source="## Visualize distributions of the dataset\n"
             + DATA_VISUALIZATION_MESSAGE

@@ -41,10 +41,10 @@ class TestE2ECommon:
         for cell in client.nb.cells:
             if cell.get("outputs"):
                 for output in cell["outputs"]:
-                    assert (
-                        output.get("output_type") != "error"
-                    ), "There shouldn't be any errors in the executed " +\
-                        "jupyter notebook"
+                    assert output.get("output_type") != "error", (
+                        "There shouldn't be any errors in the executed "
+                        + "jupyter notebook"
+                    )
 
     def verify_if_files_generated(
         self, csv_file_name, generate_jupyter_notebook, generate_pdf

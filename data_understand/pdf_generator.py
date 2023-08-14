@@ -6,6 +6,7 @@ from typing import Any, List, Tuple
 
 from fpdf import FPDF, Align
 
+import data_understand
 from data_understand.class_imbalance import get_message_target_column_imbalance
 from data_understand.dataset_characteristics.characteristics import (
     get_column_types_as_tuple, get_message_columns_having_missing_values)
@@ -154,7 +155,10 @@ class PDFReportGenerator(FPDF):
             message="Understanding the data in " + self._file_name
         )
         self._add_text(
-            message=MAIN_MESSAGE.format("PDF report"), multi_line=True
+            message=MAIN_MESSAGE.format(
+                "PDF report", data_understand.version, "data-understand"
+            ),
+            multi_line=True,
         )
 
     def add_index_page(self) -> None:
