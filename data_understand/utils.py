@@ -67,9 +67,13 @@ def get_ml_task_type(df: pd.DataFrame, target_column: str) -> str:
     unique_array, element_counts = np.unique(
         target_column_array, return_counts=True
     )
-    if len(unique_array) > 0.1 * len(target_column_array):
+    if np.issubdtype(unique_array.dtype, np.number) and len(
+        unique_array
+    ) > 0.1 * len(target_column_array):
         return "Regression"
-    return "Classification"
+    if len(unique_array) == 2:
+        return "Binary Classification"
+    return "Multiclass Classification"
 
 
 def construct_image_name(
