@@ -1,7 +1,7 @@
 """Utilities module for helper functions."""
 
 import timeit
-from typing import Optional
+from typing import List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -74,6 +74,21 @@ def get_ml_task_type(df: pd.DataFrame, target_column: str) -> str:
     if len(unique_array) == 2:
         return "Binary Classification"
     return "Multiclass Classification"
+
+
+def get_numerical_categorical_features(
+    df: pd.DataFrame,
+) -> Tuple[List[str], List[str]]:
+    """Get the numerical features and categorical features from a dataframe.
+
+    :param df: The dataframe to get the categorical features from.
+    :type df: pd.DataFrame
+    :return: A tuple of lists of non-categorical and categorical features.
+    :rtype: Tuple[List[str], List[str]]
+    """
+    numeric_features = set(df.select_dtypes(include="number").columns.tolist())
+    all_features = set(df.columns.tolist())
+    return numeric_features, list(all_features - numeric_features)
 
 
 def construct_image_name(

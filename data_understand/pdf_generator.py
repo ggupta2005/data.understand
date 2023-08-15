@@ -207,6 +207,7 @@ class PDFReportGenerator(FPDF):
 
         self._add_text(
             get_message_columns_having_missing_values(self._dataframe),
+            multi_line=True,
         )
 
         dataset_snapshot_table = get_column_types_as_tuple(self._dataframe)

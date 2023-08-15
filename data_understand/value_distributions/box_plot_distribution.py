@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from data_understand.utils import construct_image_name
-from data_understand.value_distributions.distribution_utils import \
-    get_categorical_features
+from data_understand.utils import (construct_image_name,
+                                   get_numerical_categorical_features)
 
 
 def save_box_plot_distributions(
@@ -30,7 +29,7 @@ def save_box_plot_distributions(
     (
         numerical_feature_list,
         categorical_feature_list,
-    ) = get_categorical_features(df)
+    ) = get_numerical_categorical_features(df)
     saved_image_name_list = []
     for numerical_feature in numerical_feature_list:
         for categorical_feature in categorical_feature_list:
@@ -65,7 +64,7 @@ def generate_box_plot_distributions(df: pd.DataFrame) -> None:
     (
         numerical_feature_list,
         categorical_feature_list,
-    ) = get_categorical_features(df)
+    ) = get_numerical_categorical_features(df)
     for numerical_feature in numerical_feature_list:
         for categorical_feature in categorical_feature_list:
             sns.boxplot(x=numerical_feature, y=categorical_feature, data=df)
