@@ -5,6 +5,8 @@ from typing import Any, List, Tuple
 import numpy as np
 import pandas as pd
 
+from data_understand.utils import get_numerical_categorical_features
+
 
 def _get_columns_having_missing_values(df: pd.DataFrame) -> List[str]:
     """Return the columns having missing values in the dataframe.
@@ -33,9 +35,28 @@ def get_message_columns_having_missing_values(df: pd.DataFrame) -> str:
     if len(columns_having_missing_values) == 0:
         return "No columns were found to have missing values"
     else:
-        return "The columns having missing values are: " + ",".join(
-            columns_having_missing_values
+        message = "The columns having missing values are: {0}.\n".format(
+            ",".join(columns_having_missing_values)
         )
+        (
+            numerical_feature_list,
+            _,
+        ) = get_numerical_categorical_features(df)
+        for column in columns_having_missing_values:
+            if column in numerical_feature_list:
+                message += (
+                    "- The missing values in column {0} "
+                    "could be imputed with mean/median value.\n").format(
+                        column
+                )
+            else:
+                message += (
+                    "- The missing values in column {0} "
+                    "could be imputed with mode value.\n").format(
+                        column
+                )
+
+        return message
 
 
 def find_columns_having_missing_values(df: pd.DataFrame) -> None:
