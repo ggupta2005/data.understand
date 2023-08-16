@@ -1,5 +1,6 @@
 """Module to generate jupyter notebook."""
 
+from pathlib import Path
 from typing import Any
 
 import nbformat
@@ -51,12 +52,13 @@ def generate_jupyter_notebook(args: Any) -> None:
     """
     print("Generating jupyter notebook for the dataset in " + args.file_name)
     nb = v4.new_notebook()
-    nb.metadata["title"] = "Understanding the data in " + args.file_name
+    nb.metadata["title"] = "Understanding the data in " + \
+        Path(args.file_name).name
 
     (
         dataframe_read_markdown,
         dataframe_read_code,
-    ) = get_jupyter_nb_code_to_read_as_dataframe(args.file_name)
+    ) = get_jupyter_nb_code_to_read_as_dataframe(Path(args.file_name).name)
     (
         target_read_markdown,
         target_read_code,
@@ -118,7 +120,7 @@ def generate_jupyter_notebook(args: Any) -> None:
     ) = get_jupyter_nb_code_to_find_target_column_imbalance()
     nb["cells"] = [
         v4.new_markdown_cell(
-            source="# Understanding the data in " + args.file_name
+            source="# Understanding the data in " + Path(args.file_name).name
         ),
         v4.new_markdown_cell(
             source=MAIN_MESSAGE.format(
