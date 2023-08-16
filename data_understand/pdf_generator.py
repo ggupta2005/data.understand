@@ -2,6 +2,7 @@
 
 import os
 import uuid
+from pathlib import Path
 from typing import Any, List, Tuple
 
 from fpdf import FPDF, Align
@@ -152,7 +153,7 @@ class PDFReportGenerator(FPDF):
         """
         self.add_page()
         self._add_heading(
-            message="Understanding the data in " + self._file_name
+            message="Understanding the data in " + Path(self._file_name).name
         )
         self._add_text(
             message=MAIN_MESSAGE.format(
