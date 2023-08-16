@@ -2,13 +2,13 @@ import os
 import subprocess
 
 import nbformat
-import PyPDF2
+import pypdf
 from nbclient import NotebookClient
 
 
 class TestE2ECommon:
     def verify_pdf_file(self, pdf_file_name):
-        pdf_reader = PyPDF2.PdfReader(pdf_file_name)
+        pdf_reader = pypdf.PdfReader(pdf_file_name)
         assert len(pdf_reader.pages) > 0
 
     def verify_jupyter_notebook(self, jupyter_notebook_file_name):

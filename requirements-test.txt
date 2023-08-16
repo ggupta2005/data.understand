@@ -3,7 +3,7 @@ pytest-xdist
 scikit-learn
 rai_test_utils>=0.3.0
 nbconvert
-PyPDF2
+pypdf
 requests
 ipykernel
 nbclient
