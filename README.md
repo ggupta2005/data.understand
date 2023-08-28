@@ -3,6 +3,7 @@
 [![Downloads](https://static.pepy.tech/badge/data-understand)](https://pepy.tech/project/data-understand)
 [![Run Python E2E Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml)
 [![Run Python Unit Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-unit-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-unit-tests.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/ggupta2005/data.understand/badge)](https://www.codefactor.io/repository/github/ggupta2005/data.understand)
 
 ## Motivation
 As data scientists and machine learning engineers, we are often required to execute various data science tasks like loading up the dataset into a pandas dataframe, inspecting the columns/rows in the dataset, visualizing the distribution of values, finding feature correlations and determining if there are any sort of imbalances in the dataset. Often these tasks are repetitive and involve creating multiple jupyter notebooks and we have to manage these jupyter notebooks separately with different handles to the location of input dataset. How about you have one tool which could take the directory location of your dataset and generate the boring aforementioned logic for you to execute and learn the same insights about your dataset. All you need to do is to install this tool in your local python environment and then execute the tool from a command line.
