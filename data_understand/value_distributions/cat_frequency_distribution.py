@@ -5,7 +5,8 @@ from typing import Dict, List, Tuple
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from data_understand.utils import construct_image_name, get_numerical_categorical_features
+from data_understand.utils import (construct_image_name,
+                                   get_numerical_categorical_features)
 
 
 def _generate_cat_frequency(df: pd.DataFrame) -> Dict[str, pd.Series]:
