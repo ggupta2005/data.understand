@@ -5,7 +5,8 @@ from typing import Dict, List, Tuple
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from data_understand.utils import construct_image_name
+from data_understand.utils import (construct_image_name,
+                                   get_numerical_categorical_features)
 
 
 def _generate_cat_frequency(df: pd.DataFrame) -> Dict[str, pd.Series]:
@@ -16,12 +17,13 @@ def _generate_cat_frequency(df: pd.DataFrame) -> Dict[str, pd.Series]:
     :return: A dictionary of value counts for each categorical feature.
     :rtype: Dict[str, pd.Series]
     """
-    numeric_features = set(df.select_dtypes(include="number").columns.tolist())
-    all_features = set(df.columns.tolist())
-    categorical_features = list(all_features - numeric_features)
+    (
+        _,
+        categorical_feature_list,
+    ) = get_numerical_categorical_features(df)
 
     value_counts_dict = {}
-    for feature in categorical_features:
+    for feature in categorical_feature_list:
         counts = df[feature].value_counts()
         value_counts_dict[feature] = counts
 

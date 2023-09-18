@@ -30,6 +30,7 @@ def save_box_plot_distributions(
         numerical_feature_list,
         categorical_feature_list,
     ) = get_numerical_categorical_features(df)
+
     saved_image_name_list = []
     for numerical_feature in numerical_feature_list:
         for categorical_feature in categorical_feature_list:
