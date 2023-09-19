@@ -1,0 +1,38 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+
+jobs:
+  security-scan:
+    name: Run Safety Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install data_understand
+      run: pip install -e .
+
+    - name: Install safety
+      run: pip install safety
+
+    - name: Run Safety Check
+      run: |
+        safety check
+
+    - name: Upload Safety Check Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: safety-check-results
+        path: safety-report.json
