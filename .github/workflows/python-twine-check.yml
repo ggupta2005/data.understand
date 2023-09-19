@@ -17,8 +17,11 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Check package consistency with twine
+      - name: Install wheel and twine
         run: |
           pip install twine wheel
+
+      - name: Check package consistency with twine
+        run: |
           python setup.py check sdist bdist_wheel
           twine check dist/*
