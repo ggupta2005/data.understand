@@ -27,6 +27,9 @@ jobs:
     - name: Install safety
       run: pip install safety
 
+    - name: Dump all installed packages
+      run: pip list
+
     - name: Run Safety Check
       run: |
         safety check
