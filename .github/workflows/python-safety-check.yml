@@ -21,6 +21,9 @@ jobs:
       with:
         python-version: 3.x
 
+    - name: Upgrade setuptools
+      run: pip install --upgrade setuptools
+
     - name: Install data_understand
       run: pip install -e .
 
