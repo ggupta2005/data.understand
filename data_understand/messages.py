@@ -88,6 +88,9 @@ BOX_PLOT_DISTRIBUTION_MESSAGE = (
     "in a numerical column. These graphs help in uncovering "
     "patterns that exist between various categories in a "
     "categorical column with the values in the numerical columns."
+    "The categorical columns having 15 categories or less are choosen "
+    "for box plot distribution because the box plot visualization is "
+    "not useful for larger number of categories."
 )
 
 FEATURE_CORRELATION_MESSAGE = (

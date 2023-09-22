@@ -46,15 +46,13 @@ def get_message_columns_having_missing_values(df: pd.DataFrame) -> str:
             if column in numerical_feature_list:
                 message += (
                     "- The missing values in column {0} "
-                    "could be imputed with mean/median value.\n").format(
-                        column
-                )
+                    "could be imputed with mean/median value.\n"
+                ).format(column)
             else:
                 message += (
                     "- The missing values in column {0} "
-                    "could be imputed with mode value.\n").format(
-                        column
-                )
+                    "could be imputed with mode value.\n"
+                ).format(column)
 
         return message
 

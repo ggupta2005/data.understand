@@ -52,8 +52,9 @@ def generate_jupyter_notebook(args: Any) -> None:
     """
     print("Generating jupyter notebook for the dataset in " + args.file_name)
     nb = v4.new_notebook()
-    nb.metadata["title"] = "Understanding the data in " + \
-        Path(args.file_name).name
+    nb.metadata["title"] = (
+        "Understanding the data in " + Path(args.file_name).name
+    )
 
     (
         dataframe_read_markdown,
