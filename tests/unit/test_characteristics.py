@@ -48,12 +48,21 @@ class TestDatasetCharacteristics:
         )
         output = get_message_columns_having_missing_values(df_missing_values)
         assert "The columns having missing values are: A,B" in output
-        assert "The missing values in column A could be imputed " + \
-            "with mean/median value." in output
-        assert "The missing values in column B could be imputed " + \
-            "with mean/median value." in output
-        assert "The missing values in column D could be imputed " +\
-            "with mode value." in output
+        assert (
+            "The missing values in column A could be imputed "
+            + "with mean/median value."
+            in output
+        )
+        assert (
+            "The missing values in column B could be imputed "
+            + "with mean/median value."
+            in output
+        )
+        assert (
+            "The missing values in column D could be imputed "
+            + "with mode value."
+            in output
+        )
 
         df_no_missing_values = pd.DataFrame(
             {"A": [1, 2, 3], "B": [4, 5, 5], "C": [4, 5, 9]}

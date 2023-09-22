@@ -10,6 +10,18 @@ from data_understand.utils import (construct_image_name,
                                    get_numerical_categorical_features)
 
 
+def _prune_categorical_feature_list(
+    df: pd.DataFrame, categorical_feature_list: List[str]
+) -> List[str]:
+    pruned_categorical_feature_list = []
+    for feature in categorical_feature_list:
+        counts = df[feature].value_counts()
+        if len(counts) <= 15:
+            pruned_categorical_feature_list.append(feature)
+
+    return pruned_categorical_feature_list
+
+
 def save_box_plot_distributions(
     df: pd.DataFrame, current_execution_uuid: str
 ) -> List[str]:
@@ -31,9 +43,13 @@ def save_box_plot_distributions(
         categorical_feature_list,
     ) = get_numerical_categorical_features(df)
 
+    pruned_categorical_feature_list = _prune_categorical_feature_list(
+        df, categorical_feature_list
+    )
+
     saved_image_name_list = []
     for numerical_feature in numerical_feature_list:
-        for categorical_feature in categorical_feature_list:
+        for categorical_feature in pruned_categorical_feature_list:
             sns.boxplot(x=numerical_feature, y=categorical_feature, data=df)
             plt.xlabel(numerical_feature)
             plt.ylabel(categorical_feature)
@@ -66,8 +82,13 @@ def generate_box_plot_distributions(df: pd.DataFrame) -> None:
         numerical_feature_list,
         categorical_feature_list,
     ) = get_numerical_categorical_features(df)
+
+    pruned_categorical_feature_list = _prune_categorical_feature_list(
+        df, categorical_feature_list
+    )
+
     for numerical_feature in numerical_feature_list:
-        for categorical_feature in categorical_feature_list:
+        for categorical_feature in pruned_categorical_feature_list:
             sns.boxplot(x=numerical_feature, y=categorical_feature, data=df)
             plt.xlabel(numerical_feature)
             plt.ylabel(categorical_feature)
