@@ -36,9 +36,3 @@ jobs:
     - name: Run Safety Check
       run: |
         safety check
-
-    - name: Upload Safety Check Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: safety-check-results
-        path: safety-report.json
