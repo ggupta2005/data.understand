@@ -1,8 +1,12 @@
 # data-understand
 ![PyPI data-understand](https://img.shields.io/pypi/v/data-understand)
+![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)
+![versions](https://img.shields.io/pypi/pyversions/data-understand)
 [![Downloads](https://static.pepy.tech/badge/data-understand)](https://pepy.tech/project/data-understand)
+
 [![Run Python E2E Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-e2e-tests.yml)
 [![Run Python Unit Tests](https://github.com/ggupta2005/data.understand/actions/workflows/python-unit-tests.yml/badge.svg)](https://github.com/ggupta2005/data.understand/actions/workflows/python-unit-tests.yml)
+
 [![CodeFactor](https://www.codefactor.io/repository/github/ggupta2005/data.understand/badge)](https://www.codefactor.io/repository/github/ggupta2005/data.understand)
 
 ## Motivation
